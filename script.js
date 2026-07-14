@@ -44,7 +44,20 @@ window.addEventListener("load", () => {
 
   setTimeout(() => {
 
-    document.getElementById("loader").style.display = "none";
+    const loader =
+      document.getElementById("loader");
+
+    if (loader) {
+
+      loader.style.opacity = "0";
+
+      setTimeout(() => {
+
+        loader.style.display = "none";
+
+      }, 500);
+
+    }
 
   }, 2500);
 
@@ -69,19 +82,37 @@ async function loadWebsiteData() {
 
     const data = snap.data();
 
-    if (data.heroImage) {
-      document.getElementById("heroImage").src =
-        data.heroImage;
+    if (
+      data.heroImage &&
+      document.getElementById("heroImage")
+    ) {
+
+      document.getElementById(
+        "heroImage"
+      ).src = data.heroImage;
+
     }
 
-    if (data.name) {
-      document.getElementById("name").textContent =
-        data.name;
+    if (
+      data.name &&
+      document.getElementById("name")
+    ) {
+
+      document.getElementById(
+        "name"
+      ).textContent = data.name;
+
     }
 
-    if (data.bio) {
-      document.getElementById("bio").textContent =
-        data.bio;
+    if (
+      data.bio &&
+      document.getElementById("bio")
+    ) {
+
+      document.getElementById(
+        "bio"
+      ).textContent = data.bio;
+
     }
 
   } catch (error) {
@@ -97,34 +128,52 @@ async function loadWebsiteData() {
 
 loadWebsiteData();
 
-
 // ======================
 // PHOTO GALLERY
 // ======================
 
 async function loadGallery() {
 
-  const gallery =
-    document.getElementById("photoGallery");
+  try {
 
-  gallery.innerHTML = "";
+    const gallery =
+      document.getElementById(
+        "photoGallery"
+      );
 
-  const snap =
-    await getDocs(
-      collection(db, "gallery")
+    if (!gallery) return;
+
+    gallery.innerHTML = "";
+
+    const snap =
+      await getDocs(
+        collection(db, "gallery")
+      );
+
+    snap.forEach((docSnap) => {
+
+      const data =
+        docSnap.data();
+
+      gallery.innerHTML += `
+
+      <img
+      src="${data.imageUrl}"
+      alt="Magician Bhuvan Bhaskar"
+      class="gallery-image">
+
+      `;
+
+    });
+
+  } catch (error) {
+
+    console.error(
+      "Gallery Error:",
+      error
     );
 
-  snap.forEach((docSnap) => {
-
-    const data = docSnap.data();
-
-    gallery.innerHTML += `
-      <img
-        src="${data.imageUrl}"
-        class="gallery-image">
-    `;
-
-  });
+  }
 
 }
 
@@ -135,37 +184,57 @@ async function loadGallery() {
 
 async function loadVideos() {
 
-  const videoGallery =
-    document.getElementById("videoGallery");
+  try {
 
-  videoGallery.innerHTML = "";
+    const videoGallery =
+      document.getElementById(
+        "videoGallery"
+      );
 
-  const snap =
-    await getDocs(
-      collection(db, "videos")
-    );
+    if (!videoGallery) return;
 
-  snap.forEach((docSnap) => {
+    videoGallery.innerHTML = "";
 
-    const data = docSnap.data();
+    const snap =
+      await getDocs(
+        collection(db, "videos")
+      );
 
-    videoGallery.innerHTML += `
+    snap.forEach((docSnap) => {
+
+      const data =
+        docSnap.data();
+
+      videoGallery.innerHTML += `
+
       <video
-        controls
-        class="gallery-video">
+      controls
+      preload="metadata"
+      class="gallery-video">
 
-        <source
-          src="${data.videoUrl}">
+      <source
+      src="${data.videoUrl}">
 
       </video>
-    `;
 
-  });
+      `;
+
+    });
+
+  } catch (error) {
+
+    console.error(
+      "Video Error:",
+      error
+    );
+
+  }
 
 }
 
 loadGallery();
 loadVideos();
+
 
 // ======================
 // ANALYTICS
@@ -176,20 +245,32 @@ async function trackAnalytics() {
   try {
 
     const analyticsRef =
-      doc(db, "analytics", "main");
+      doc(
+        db,
+        "analytics",
+        "main"
+      );
 
     const snap =
-      await getDoc(analyticsRef);
+      await getDoc(
+        analyticsRef
+      );
 
-    if (!snap.exists()) return;
+    let totalVisits = 0;
+    let uniqueVisitors = 0;
 
-    const data = snap.data();
+    if (snap.exists()) {
 
-    let totalVisits =
-      data.totalVisits || 0;
+      const data =
+        snap.data();
 
-    let uniqueVisitors =
-      data.uniqueVisitors || 0;
+      totalVisits =
+        data.totalVisits || 0;
+
+      uniqueVisitors =
+        data.uniqueVisitors || 0;
+
+    }
 
     totalVisits++;
 
@@ -229,15 +310,16 @@ async function trackAnalytics() {
 
 trackAnalytics();
 
-
 // ======================
-// WHATSAPP ENQUIRY FORM
+// WHATSAPP BOOKING FORM
 // ======================
 
 const bookingForm =
 document.getElementById(
   "bookingForm"
 );
+
+if (bookingForm) {
 
 bookingForm.addEventListener(
   "submit",
@@ -273,9 +355,9 @@ bookingForm.addEventListener(
         "textarea"
       ).value;
 
-    const whatsappText =
+const whatsappText =
 
-`🎩 MAGIC SHOW ENQUIRY
+`🎩 MAGIC SHOW BOOKING ENQUIRY
 
 Name: ${name}
 
@@ -292,19 +374,46 @@ Expected Audience: ${audience}
 Message:
 ${message}`;
 
-    window.open(
-      `https://wa.me/919229609882?text=${encodeURIComponent(
-        whatsappText
-      )}`,
-      "_blank"
-    );
+window.open(
+`https://wa.me/919229609882?text=${encodeURIComponent(
+whatsappText
+)}`,
+"_blank"
+);
+
+});
+}
+
+
+// ======================
+// SCROLL DOWN BUTTON
+// ======================
+
+const scrollDown =
+document.getElementById(
+  "scrollDown"
+);
+
+if (scrollDown) {
+
+scrollDown.addEventListener(
+  "click",
+  () => {
+
+    document
+      .querySelector(".stats")
+      .scrollIntoView({
+        behavior: "smooth"
+      });
 
   }
 );
 
+}
+
 
 // ======================
-// AUTO SCROLL ANIMATION
+// SCROLL ANIMATION
 // ======================
 
 const sections =
@@ -314,11 +423,14 @@ document.querySelectorAll(
 
 const observer =
 new IntersectionObserver(
+
 (entries) => {
 
 entries.forEach((entry) => {
 
-if (entry.isIntersecting) {
+if (
+entry.isIntersecting
+) {
 
 entry.target.classList.add(
 "show"
@@ -329,16 +441,62 @@ entry.target.classList.add(
 });
 
 },
+
 {
 threshold: 0.1
 }
+
 );
 
-sections.forEach((section) => {
+sections.forEach(
+(section) => {
 
-observer.observe(section);
+observer.observe(
+section
+);
 
-});
+}
+);
+
+
+// ======================
+// HIDDEN ADMIN ACCESS
+// ======================
+
+let tapCount = 0;
+
+const secretAdmin =
+document.getElementById(
+  "secretAdmin"
+);
+
+if (secretAdmin) {
+
+secretAdmin.addEventListener(
+  "click",
+  () => {
+
+    tapCount++;
+
+    if (tapCount >= 7) {
+
+      tapCount = 0;
+
+      window.location.href =
+      "admin.html";
+
+    }
+
+    setTimeout(() => {
+
+      tapCount = 0;
+
+    }, 3000);
+
+  }
+);
+
+}
 
 
 // ======================
