@@ -3,23 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Admin Panel | Magician Bhuvan Bhaskar</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<title>Admin Panel - Magician Bhuvan Bhaskar</title>
 
 <style>
-
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:'Poppins',sans-serif;
-}
+*{margin:0;padding:0;box-sizing:border-box;font-family:Poppins,sans-serif}
 
 body{
 background:#0A0A0A;
 color:white;
-min-height:100vh;
 padding:20px;
 }
 
@@ -29,68 +20,44 @@ margin:auto;
 }
 
 .card{
-background:rgba(255,255,255,0.05);
-backdrop-filter:blur(10px);
-border:1px solid rgba(212,175,55,0.3);
+background:#111;
+border:1px solid #D4AF37;
 border-radius:20px;
-padding:25px;
+padding:20px;
 margin-bottom:20px;
 }
 
-.title{
-text-align:center;
+h1,h2{
 color:#D4AF37;
-font-size:32px;
-font-weight:700;
-margin-bottom:20px;
-}
-
-.subtitle{
-color:#D4AF37;
-font-size:20px;
 margin-bottom:15px;
 }
 
-input,
-textarea{
+input,textarea{
 width:100%;
-padding:14px;
-margin-bottom:15px;
-border:none;
-outline:none;
-border-radius:12px;
+padding:12px;
+margin-bottom:12px;
 background:#1a1a1a;
+border:none;
+border-radius:10px;
 color:white;
-font-size:15px;
-}
-
-textarea{
-min-height:120px;
-resize:vertical;
 }
 
 button{
 width:100%;
-padding:14px;
+padding:12px;
 border:none;
-border-radius:12px;
+border-radius:10px;
+font-weight:bold;
 cursor:pointer;
-font-size:16px;
-font-weight:600;
 margin-top:10px;
 }
 
-.login-btn{
+.gold{
 background:#D4AF37;
 color:black;
 }
 
-.save-btn{
-background:#D4AF37;
-color:black;
-}
-
-.logout-btn{
+.red{
 background:#ff4444;
 color:white;
 }
@@ -98,87 +65,66 @@ color:white;
 #dashboard{
 display:none;
 }
-
-.status{
-margin-top:10px;
-text-align:center;
-font-weight:600;
-}
-
 </style>
 </head>
 <body>
 
 <div class="container">
 
-<!-- LOGIN -->
-
 <div id="loginBox" class="card">
-
-<h1 class="title">Admin Login</h1>
+<h1>Admin Login</h1>
 
 <input type="email" id="email" placeholder="Email">
-
 <input type="password" id="password" placeholder="Password">
 
-<button class="login-btn" onclick="login()">
-Login
-</button>
+<button class="gold" onclick="login()">Login</button>
 
-<div id="loginStatus" class="status"></div>
-
+<p id="loginStatus"></p>
 </div>
-
-<!-- DASHBOARD -->
 
 <div id="dashboard">
 
 <div class="card">
+<h2>Website Information</h2>
 
-<h2 class="subtitle">Website Information</h2>
-
-<input type="text" id="name" placeholder="Name">
-
+<input id="name" placeholder="Name">
 <textarea id="bio" placeholder="Bio"></textarea>
 
-<input type="number" id="shows" placeholder="Shows">
+<input id="shows" type="number" placeholder="Shows">
+<input id="cities" type="number" placeholder="Cities">
+<input id="years" type="number" placeholder="Years">
 
-<input type="number" id="cities" placeholder="Cities">
+<input id="phone" placeholder="Phone">
+<input id="instagram" placeholder="Instagram">
+<input id="youtube" placeholder="YouTube">
 
-<input type="number" id="years" placeholder="Years">
+<button class="gold" onclick="saveData()">Save Changes</button>
 
-<input type="text" id="phone" placeholder="Phone">
-
-<input type="text" id="instagram" placeholder="Instagram">
-
-<input type="text" id="youtube" placeholder="YouTube">
-
-<button class="save-btn" onclick="saveData()">
-Save Changes
-</button>
-
-<div id="saveStatus" class="status"></div>
-
+<p id="saveStatus"></p>
 </div>
 
 <div class="card">
+<h2>Photo Upload (Cloudinary)</h2>
 
-<h2 class="subtitle">Cloudinary (Future)</h2>
+<input type="file" id="photoFile" accept="image/*">
 
-<p>
-Photo Upload<br>
-Video Upload<br>
-Hero Image Change
-</p>
-
+<button class="gold">
+Upload Photo
+</button>
 </div>
 
 <div class="card">
+<h2>Video Upload (Cloudinary)</h2>
 
-<button class="logout-btn" onclick="logout()">
-Logout
+<input type="file" id="videoFile" accept="video/*">
+
+<button class="gold">
+Upload Video
 </button>
+</div>
 
+<div class="card">
+<button class="red" onclick="logout()">Logout</button>
 </div>
 
 </div>
