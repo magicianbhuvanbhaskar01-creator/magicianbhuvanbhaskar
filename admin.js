@@ -83,6 +83,13 @@ window.saveData = async function () {
 
   try {
 
+    const oldSnap = await getDoc(
+      doc(db, "website", "main")
+    );
+
+    const oldData =
+      oldSnap.exists() ? oldSnap.data() : {};
+
     await setDoc(
       doc(db, "website", "main"),
       {
@@ -93,7 +100,8 @@ window.saveData = async function () {
         years: document.getElementById("years").value,
         phone: document.getElementById("phone").value,
         instagram: document.getElementById("instagram").value,
-        youtube: document.getElementById("youtube").value
+        youtube: document.getElementById("youtube").value,
+        heroImage: oldData.heroImage || ""
       }
     );
 
@@ -120,6 +128,16 @@ async function loadData() {
     if (snap.exists()) {
 
       const data = snap.data();
+
+      if (data.heroImage) {
+
+        document.getElementById("heroPreview").src =
+          data.heroImage;
+
+        document.getElementById("heroPreview").style.display =
+          "block";
+
+      }
 
       document.getElementById("name").value =
         data.name || "";
@@ -154,3 +172,60 @@ async function loadData() {
   }
 
 }
+
+window.uploadHero = async function () {
+
+  const file =
+    document.getElementById("heroFile").files[0];
+
+  if (!file) {
+
+    document.getElementById("heroStatus").innerText =
+      "Please select image";
+
+    return;
+  }
+
+  try {
+
+    const formData = new FormData();
+
+    formData.append("file", file);
+    formData.append("upload_preset", "magician_upload");
+    formData.append("folder", "magician-bhuvan");
+
+    const response = await fetch(
+      "https://api.cloudinary.com/v1_1/y9ynjjvq/image/upload",
+      {
+        method: "POST",
+        body: formData
+      }
+    );
+
+    const result = await response.json();
+
+    await setDoc(
+      doc(db, "website", "main"),
+      {
+        heroImage: result.secure_url
+      },
+      { merge: true }
+    );
+
+    document.getElementById("heroPreview").src =
+      result.secure_url;
+
+    document.getElementById("heroPreview").style.display =
+      "block";
+
+    document.getElementById("heroStatus").innerText =
+      "Hero Image Uploaded";
+
+  } catch (err) {
+
+    document.getElementById("heroStatus").innerText =
+      err.message;
+
+  }
+
+};
