@@ -99,10 +99,7 @@ async function loadVideos() {
 
 }
 
-alert("Gallery Function Calling");
 loadGallery();
-
-alert("Video Function Calling");
 loadVideos();
 
 // WhatsApp Form
