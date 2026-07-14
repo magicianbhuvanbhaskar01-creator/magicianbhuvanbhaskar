@@ -1,196 +1,137 @@
-// Firebase Imports
-
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
 import {
-getAuth,
-signInWithEmailAndPassword,
-signOut,
-onAuthStateChanged
+  getAuth,
+  signInWithEmailAndPassword,
+  signOut,
+  onAuthStateChanged
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 import {
-getFirestore,
-doc,
-getDoc,
-updateDoc
+  getFirestore,
+  doc,
+  getDoc,
+  updateDoc
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-
-// Firebase Config
-
 const firebaseConfig = {
-apiKey: "AIzaSyCgCrXp0kh11u3ES4ZQFkjWcAcvBPnSo00",
-authDomain: "magicianbhuvanbhaskar-b6c70.firebaseapp.com",
-projectId: "magicianbhuvanbhaskar-b6c70",
-storageBucket: "magicianbhuvanbhaskar-b6c70.firebasestorage.app",
-messagingSenderId: "11124052200",
-appId: "1:11124052200:web:c5795c333510c6cfc2f95d"
+  apiKey: "AIzaSyCgCrXp0kh11u3ES4ZQFkjWcAcvBPnSo00",
+  authDomain: "magicianbhuvanbhaskar-b6c70.firebaseapp.com",
+  projectId: "magicianbhuvanbhaskar-b6c70",
+  storageBucket: "magicianbhuvanbhaskar-b6c70.firebasestorage.app",
+  messagingSenderId: "11124052200",
+  appId: "1:11124052200:web:c5795c333510c6cfc2f95d"
 };
 
-
-// Init
-
 const app = initializeApp(firebaseConfig);
-
 const auth = getAuth(app);
-
 const db = getFirestore(app);
-
-
-// Login
 
 window.login = async function () {
 
-const email = document.getElementById("email").value;
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
 
-const password = document.getElementById("password").value;
+  try {
 
-const status = document.getElementById("loginStatus");
+    await signInWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
 
-try {
+    document.getElementById("loginStatus").innerHTML =
+      "Login Successful ✅";
 
-await signInWithEmailAndPassword(
-auth,
-email,
-password
-);
+  } catch (error) {
 
-status.innerHTML = "Login Successful ✅";
+    document.getElementById("loginStatus").innerHTML =
+      error.message;
 
-}
-catch(error){
+  }
+};
 
-status.innerHTML = error.message;
+window.logout = async function () {
 
-}
+  await signOut(auth);
+  location.reload();
 
 };
 
+onAuthStateChanged(auth, async (user) => {
 
-// Logout
+  if (user) {
 
-window.logout = async function(){
+    document.getElementById("loginBox").style.display = "none";
+    document.getElementById("dashboard").style.display = "block";
 
-await signOut(auth);
-
-location.reload();
-
-};
-
-
-// Auth State
-
-onAuthStateChanged(auth, async(user)=>{
-
-if(user){
-
-document.getElementById("loginBox").style.display="none";
-
-document.getElementById("dashboard").style.display="block";
-
-loadData();
-
-}
+    loadData();
+  }
 
 });
 
+async function loadData() {
 
-// Load Firestore Data
+  const ref = doc(db, "website", "main");
 
-async function loadData(){
+  const snap = await getDoc(ref);
 
-const docRef = doc(
-db,
-"website",
-"main"
-);
+  if (!snap.exists()) return;
 
-const snap = await getDoc(docRef);
+  const data = snap.data();
 
-if(!snap.exists()) return;
+  document.getElementById("name").value =
+    data.name || "";
 
-const data = snap.data();
+  document.getElementById("bio").value =
+    data.bio || "";
 
-document.getElementById("name").value =
-data.name || "";
+  document.getElementById("shows").value =
+    data.shows || "";
 
-document.getElementById("bio").value =
-data.bio || "";
+  document.getElementById("cities").value =
+    data.cities || "";
 
-document.getElementById("shows").value =
-data.shows || "";
+  document.getElementById("years").value =
+    data.years || "";
 
-document.getElementById("cities").value =
-data.cities || "";
+  document.getElementById("phone").value =
+    data.phone || "";
 
-document.getElementById("years").value =
-data.years || "";
+  document.getElementById("instagram").value =
+    data.instagram || "";
 
-document.getElementById("phone").value =
-data.phone || "";
-
-document.getElementById("instagram").value =
-data.instagram || "";
-
-document.getElementById("youtube").value =
-data.youtube || "";
+  document.getElementById("youtube").value =
+    data.youtube || "";
 
 }
 
+window.saveData = async function () {
 
-// Save Data
+  try {
 
-window.saveData = async function(){
+    await updateDoc(
+      doc(db, "website", "main"),
+      {
+        name: document.getElementById("name").value,
+        bio: document.getElementById("bio").value,
+        shows: Number(document.getElementById("shows").value),
+        cities: Number(document.getElementById("cities").value),
+        years: Number(document.getElementById("years").value),
+        phone: document.getElementById("phone").value,
+        instagram: document.getElementById("instagram").value,
+        youtube: document.getElementById("youtube").value
+      }
+    );
 
-const status =
-document.getElementById("saveStatus");
+    document.getElementById("saveStatus").innerHTML =
+      "Saved Successfully ✅";
 
-try{
+  } catch (error) {
 
-await updateDoc(
+    document.getElementById("saveStatus").innerHTML =
+      error.message;
 
-doc(db,"website","main"),
-
-{
-
-name:
-document.getElementById("name").value,
-
-bio:
-document.getElementById("bio").value,
-
-shows:
-Number(document.getElementById("shows").value),
-
-cities:
-Number(document.getElementById("cities").value),
-
-years:
-Number(document.getElementById("years").value),
-
-phone:
-document.getElementById("phone").value,
-
-instagram:
-document.getElementById("instagram").value,
-
-youtube:
-document.getElementById("youtube").value
-
-}
-
-);
-
-status.innerHTML =
-"Saved Successfully ✅";
-
-}
-catch(error){
-
-status.innerHTML =
-error.message;
-
-}
+  }
 
 };
