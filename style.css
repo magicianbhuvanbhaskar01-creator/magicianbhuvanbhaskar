@@ -1,24 +1,36 @@
+/* =========================
+   RESET
+========================= */
+
 *{
 margin:0;
 padding:0;
 box-sizing:border-box;
-font-family:Arial,sans-serif;
+}
+
+html{
+scroll-behavior:smooth;
 }
 
 body{
+font-family:Arial, sans-serif;
 background:#000;
 color:#fff;
+line-height:1.6;
 overflow-x:hidden;
 }
 
-/* Loader */
+
+/* =========================
+   LOADER
+========================= */
 
 #loader{
 position:fixed;
 top:0;
 left:0;
 width:100%;
-height:100%;
+height:100vh;
 background:#000;
 display:flex;
 flex-direction:column;
@@ -26,178 +38,380 @@ justify-content:center;
 align-items:center;
 z-index:9999;
 text-align:center;
+padding:20px;
+}
+
+#loader img{
+width:180px;
+height:180px;
+object-fit:cover;
+border-radius:50%;
+border:3px solid gold;
+margin-bottom:20px;
 }
 
 #loader h1{
-color:#FFD700;
-font-size:24px;
+font-size:22px;
+color:gold;
 margin-bottom:10px;
 }
 
 #loader h2{
-color:white;
 font-size:18px;
+color:#fff;
 }
+
+
+/* =========================
+   HERO
+========================= */
 
 .hero{
 position:relative;
+width:100%;
+height:100vh;
+overflow:hidden;
 }
 
-.hero img{
+#heroImage{
 width:100%;
-display:block;
+height:100%;
+object-fit:cover;
 }
 
 .overlay{
 position:absolute;
-top:50%;
-left:50%;
-transform:translate(-50%,-50%);
-text-align:center;
-width:90%;
-}
-
-.overlay h1{
-color:#FFD700;
-font-size:42px;
-text-shadow:0 0 20px gold;
-margin-bottom:10px;
-}
-
-.overlay p{
-font-size:20px;
-margin-bottom:20px;
-}
-
-.buttons{
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.45);
 display:flex;
+flex-direction:column;
 justify-content:center;
+align-items:center;
+text-align:center;
+padding:20px;
+}
+
+#name{
+font-size:36px;
+font-weight:bold;
+color:gold;
+margin-bottom:10px;
+text-shadow:0 0 15px rgba(255,215,0,.7);
+}
+
+.tagline{
+font-size:18px;
+margin-bottom:25px;
+}
+
+
+/* =========================
+   BUTTONS
+========================= */
+
+.hero-buttons,
+.social-buttons{
+display:flex;
+gap:12px;
 flex-wrap:wrap;
-gap:10px;
+justify-content:center;
 }
 
 .btn{
-background:#FFD700;
+display:inline-block;
+padding:12px 22px;
+background:gold;
 color:#000;
 text-decoration:none;
-padding:12px 18px;
-border-radius:30px;
 font-weight:bold;
+border-radius:8px;
 transition:.3s;
 }
 
 .btn:hover{
-transform:scale(1.05);
+transform:translateY(-3px);
 }
 
-section{
-padding:50px 20px;
-max-width:1100px;
-margin:auto;
-}
 
-h2{
-color:#FFD700;
-text-align:center;
-margin-bottom:20px;
-}
-
-ul{
-list-style:none;
-text-align:center;
-}
-
-ul li{
-padding:10px;
-border-bottom:1px solid rgba(255,215,0,.15);
-}
+/* =========================
+   STATS
+========================= */
 
 .stats{
 display:flex;
 justify-content:center;
-gap:20px;
+align-items:center;
+gap:25px;
+padding:30px 15px;
+background:#111;
 flex-wrap:wrap;
-padding:50px 20px;
 }
 
 .stat-box{
-background:#111;
-border:1px solid #FFD700;
-border-radius:15px;
-padding:25px;
-min-width:180px;
 text-align:center;
 }
 
 .stat-box h2{
-margin:0;
-font-size:36px;
+font-size:28px;
+color:gold;
 }
 
-.card-image{
-width:100%;
-max-width:900px;
-display:block;
+.stat-box p{
+font-size:15px;
+}
+
+
+/* =========================
+   SECTION
+========================= */
+
+.section{
+padding:60px 20px;
+max-width:1200px;
 margin:auto;
-border-radius:15px;
-border:2px solid gold;
 }
 
-.coming{
-background:#111;
-border:1px dashed gold;
-padding:40px;
+.section h2{
 text-align:center;
-border-radius:15px;
-font-size:20px;
+font-size:32px;
+margin-bottom:30px;
+color:gold;
 }
 
-form{
+
+/* =========================
+   PHOTO GRID
+========================= */
+
+.photo-grid{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:15px;
+}
+
+.gallery-image{
+width:100%;
+height:220px;
+object-fit:cover;
+border-radius:12px;
+border:2px solid #222;
+}
+
+
+/* =========================
+   VIDEO GRID
+========================= */
+
+.video-grid{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:15px;
+}
+
+.gallery-video{
+width:100%;
+border-radius:12px;
+}
+
+/* =========================
+   CARDS
+========================= */
+
+.cards{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:15px;
+}
+
+.card{
+background:#111;
+border:1px solid rgba(255,215,0,.3);
+border-radius:12px;
+padding:18px;
+text-align:center;
+font-weight:bold;
+transition:.3s;
+}
+
+.card:hover{
+transform:translateY(-5px);
+border-color:gold;
+box-shadow:0 0 15px rgba(255,215,0,.3);
+}
+
+
+/* =========================
+   ABOUT
+========================= */
+
+#bio{
+max-width:900px;
+margin:auto;
+text-align:center;
+font-size:18px;
+line-height:1.8;
+color:#ddd;
+}
+
+
+/* =========================
+   ENQUIRY FORM
+========================= */
+
+#bookingForm{
+max-width:700px;
+margin:auto;
 display:flex;
 flex-direction:column;
 gap:15px;
-max-width:600px;
-margin:auto;
 }
 
-input,
-textarea{
+#bookingForm input,
+#bookingForm textarea{
+width:100%;
 padding:14px;
-border:none;
-border-radius:10px;
 background:#111;
-color:white;
-}
-
-button{
-padding:14px;
-border:none;
+border:1px solid #333;
 border-radius:10px;
-background:#FFD700;
-color:black;
-font-weight:bold;
-cursor:pointer;
-}
-
-footer{
-background:#111;
-padding:30px;
-text-align:center;
-margin-top:30px;
-}
-
-@media(max-width:768px){
-
-.overlay h1{
-font-size:28px;
-}
-
-.overlay p{
+color:#fff;
 font-size:16px;
 }
 
-.stat-box{
+#bookingForm textarea{
+height:120px;
+resize:none;
+}
+
+#bookingForm input:focus,
+#bookingForm textarea:focus{
+outline:none;
+border-color:gold;
+}
+
+.submit-btn{
+padding:15px;
+background:gold;
+color:#000;
+border:none;
+border-radius:10px;
+font-size:17px;
+font-weight:bold;
+cursor:pointer;
+transition:.3s;
+}
+
+.submit-btn:hover{
+transform:translateY(-3px);
+}
+
+
+/* =========================
+   VISITING CARD
+========================= */
+
+.card-image{
+display:block;
 width:100%;
+max-width:700px;
+margin:auto;
+border-radius:15px;
+border:2px solid gold;
+box-shadow:0 0 20px rgba(255,215,0,.3);
+}
+
+
+/* =========================
+   FOOTER
+========================= */
+
+footer{
+background:#111;
+padding:40px 20px;
+text-align:center;
+border-top:1px solid rgba(255,215,0,.2);
+}
+
+footer h3{
+color:gold;
+margin-bottom:10px;
+}
+
+footer p{
+margin:8px 0;
+color:#ccc;
+}
+
+
+/* =========================
+   SCROLL ANIMATION
+========================= */
+
+.section{
+opacity:0;
+transform:translateY(40px);
+transition:.8s;
+}
+
+.section.show{
+opacity:1;
+transform:translateY(0);
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:768px){
+
+#name{
+font-size:28px;
+}
+
+.tagline{
+font-size:16px;
+}
+
+.stats{
+gap:15px;
+}
+
+.stat-box h2{
+font-size:22px;
+}
+
+.photo-grid{
+grid-template-columns:1fr;
+}
+
+.video-grid{
+grid-template-columns:1fr;
+}
+
+.cards{
+grid-template-columns:1fr;
+}
+
+.btn{
+width:100%;
+text-align:center;
+}
+
+.hero-buttons,
+.social-buttons{
+flex-direction:column;
+width:100%;
+}
+
+.section h2{
+font-size:26px;
+}
+
+#bio{
+font-size:16px;
 }
 
 }
