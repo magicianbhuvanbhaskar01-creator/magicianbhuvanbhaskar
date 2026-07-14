@@ -103,6 +103,49 @@ async function loadVideos() {
 loadGallery();
 loadVideos();
 
+async function trackAnalytics() {
+
+  const analyticsRef =
+    doc(db, "analytics", "main");
+
+  const snap =
+    await getDoc(analyticsRef);
+
+  if (!snap.exists()) return;
+
+  const data = snap.data();
+
+  let totalVisits =
+    data.totalVisits || 0;
+
+  let uniqueVisitors =
+    data.uniqueVisitors || 0;
+
+  totalVisits++;
+
+  if (!localStorage.getItem("visited")) {
+
+    uniqueVisitors++;
+
+    localStorage.setItem(
+      "visited",
+      "true"
+    );
+
+  }
+
+  await setDoc(
+    analyticsRef,
+    {
+      totalVisits,
+      uniqueVisitors
+    }
+  );
+
+}
+
+trackAnalytics();
+
 // WhatsApp Form
 
 document
