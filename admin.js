@@ -71,3 +71,86 @@ onAuthStateChanged(auth, (user) => {
   }
 
 });
+import {
+  getFirestore,
+  doc,
+  setDoc,
+  getDoc
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const db = getFirestore(app);
+
+window.saveData = async function () {
+
+  try {
+
+    await setDoc(
+      doc(db, "website", "main"),
+      {
+        name: document.getElementById("name").value,
+        bio: document.getElementById("bio").value,
+        shows: document.getElementById("shows").value,
+        cities: document.getElementById("cities").value,
+        years: document.getElementById("years").value,
+        phone: document.getElementById("phone").value,
+        instagram: document.getElementById("instagram").value,
+        youtube: document.getElementById("youtube").value
+      }
+    );
+
+    document.getElementById("saveStatus").innerText =
+      "Saved Successfully";
+
+  } catch (err) {
+
+    document.getElementById("saveStatus").innerText =
+      err.message;
+
+  }
+
+};
+
+async function loadData() {
+
+  try {
+
+    const snap =
+      await getDoc(doc(db, "website", "main"));
+
+    if (snap.exists()) {
+
+      const data = snap.data();
+
+      document.getElementById("name").value =
+        data.name || "";
+
+      document.getElementById("bio").value =
+        data.bio || "";
+
+      document.getElementById("shows").value =
+        data.shows || "";
+
+      document.getElementById("cities").value =
+        data.cities || "";
+
+      document.getElementById("years").value =
+        data.years || "";
+
+      document.getElementById("phone").value =
+        data.phone || "";
+
+      document.getElementById("instagram").value =
+        data.instagram || "";
+
+      document.getElementById("youtube").value =
+        data.youtube || "";
+
+    }
+
+  } catch (err) {
+
+    console.log(err);
+
+  }
+
+}
