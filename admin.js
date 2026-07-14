@@ -226,3 +226,25 @@ onAuthStateChanged(auth, async (user) => {
   await loadPhotos();
 
 });
+window.deletePhoto = async function (id) {
+
+  const ok =
+    confirm("Delete Photo?");
+
+  if (!ok) return;
+
+  try {
+
+    await deleteDoc(
+      doc(db, "gallery", id)
+    );
+
+    await loadPhotos();
+
+  } catch (error) {
+
+    alert(error.message);
+
+  }
+
+};
