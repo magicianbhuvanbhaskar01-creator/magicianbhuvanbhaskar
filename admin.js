@@ -4,14 +4,19 @@ import {
   getAuth,
   signInWithEmailAndPassword,
   signOut,
-  onAuthStateChanged
+  onAuthStateChanged,
+  updatePassword
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 import {
   getFirestore,
   doc,
   getDoc,
-  updateDoc
+  updateDoc,
+  collection,
+  addDoc,
+  getDocs,
+  deleteDoc
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const firebaseConfig = {
@@ -26,6 +31,9 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
+
+const CLOUD_NAME = "y9ynjjvq";
+const UPLOAD_PRESET = "magician_upload";
 
 window.login = async function () {
 
@@ -49,6 +57,7 @@ window.login = async function () {
       error.message;
 
   }
+
 };
 
 window.logout = async function () {
@@ -60,49 +69,32 @@ window.logout = async function () {
 
 onAuthStateChanged(auth, async (user) => {
 
-  if (user) {
+  if (!user) return;
 
-    document.getElementById("loginBox").style.display = "none";
-    document.getElementById("dashboard").style.display = "block";
+  document.getElementById("loginBox").style.display = "none";
+  document.getElementById("dashboard").style.display = "block";
 
-    loadData();
-  }
+  await loadData();
 
 });
 
 async function loadData() {
 
   const ref = doc(db, "website", "main");
-
   const snap = await getDoc(ref);
 
   if (!snap.exists()) return;
 
   const data = snap.data();
 
-  document.getElementById("name").value =
-    data.name || "";
-
-  document.getElementById("bio").value =
-    data.bio || "";
-
-  document.getElementById("shows").value =
-    data.shows || "";
-
-  document.getElementById("cities").value =
-    data.cities || "";
-
-  document.getElementById("years").value =
-    data.years || "";
-
-  document.getElementById("phone").value =
-    data.phone || "";
-
-  document.getElementById("instagram").value =
-    data.instagram || "";
-
-  document.getElementById("youtube").value =
-    data.youtube || "";
+  document.getElementById("name").value = data.name || "";
+  document.getElementById("bio").value = data.bio || "";
+  document.getElementById("shows").value = data.shows || "";
+  document.getElementById("cities").value = data.cities || "";
+  document.getElementById("years").value = data.years || "";
+  document.getElementById("phone").value = data.phone || "";
+  document.getElementById("instagram").value = data.instagram || "";
+  document.getElementById("youtube").value = data.youtube || "";
 
 }
 
@@ -135,3 +127,23 @@ window.saveData = async function () {
   }
 
 };
+
+async function uploadToCloudinary(file) {
+
+  const formData = new FormData();
+
+  formData.append("file", file);
+  formData.append("upload_preset", UPLOAD_PRESET);
+  formData.append("folder", "magician-bhuvan");
+
+  const response = await fetch(
+    `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/auto/upload`,
+    {
+      method: "POST",
+      body: formData
+    }
+  );
+
+  return await response.json();
+
+}
