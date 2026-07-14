@@ -144,6 +144,8 @@ async function trackAnalytics() {
 
   alert("Before setDoc");
   
+  try {
+
   await setDoc(
     analyticsRef,
     {
@@ -153,9 +155,11 @@ async function trackAnalytics() {
   );
 
   alert("After setDoc");
-  
-  alert("Analytics Updated");
-  
+
+} catch(err) {
+
+  alert(err.message);
+
 }
 
 trackAnalytics();
