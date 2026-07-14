@@ -39,57 +39,68 @@ window.addEventListener("load", () => {
 
 // Load Website Data
 
-async function loadWebsiteData() {
+async function loadGallery() {
 
-  try {
+  const photoGallery =
+    document.getElementById("photoGallery");
 
-    const docRef = doc(db, "website", "main");
+  const snap =
+    await getDocs(collection(db, "gallery"));
 
-    const docSnap = await getDoc(docRef);
+  photoGallery.innerHTML = "";
 
-    if (docSnap.exists()) {
+  snap.forEach((docSnap) => {
 
-      const data = docSnap.data();
+    const data = docSnap.data();
 
-      document.getElementById("name").innerText =
-        data.name || "Magician Bhuvan Bhaskar";
+    photoGallery.innerHTML += `
+      <img
+        src="${data.imageUrl}"
+        style="
+          width:100%;
+          max-width:300px;
+          border-radius:12px;
+          margin:10px;
+        ">
+    `;
 
-      document.getElementById("bio").innerText =
-        data.bio || "";
-
-      document.getElementById("shows").innerText =
-        (data.shows || 0) + "+";
-
-      document.getElementById("cities").innerText =
-        (data.cities || 0) + "+";
-
-      document.getElementById("years").innerText =
-        (data.years || 0) + "+";
-
-      document.getElementById("instagramBtn").href =
-        data.instagram || "#";
-
-      document.getElementById("youtubeBtn").href =
-        data.youtube || "#";
-
-      document.getElementById("callBtn").href =
-        "tel:" + (data.phone || "");
-      if (data.heroImage) {
-
-  document.getElementById("heroImage").src =
-    data.heroImage;
-      }
-    }
-
-  } catch (error) {
-
-    console.log(error);
-
-  }
+  });
 
 }
 
-loadWebsiteData();
+async function loadVideos() {
+
+  const videoGallery =
+    document.getElementById("videoGallery");
+
+  const snap =
+    await getDocs(collection(db, "videos"));
+
+  videoGallery.innerHTML = "";
+
+  snap.forEach((docSnap) => {
+
+    const data = docSnap.data();
+
+    videoGallery.innerHTML += `
+      <video
+        controls
+        style="
+          width:100%;
+          max-width:400px;
+          border-radius:12px;
+          margin:10px;
+        ">
+        <source src="${data.videoUrl}">
+      </video>
+    `;
+
+  });
+
+}
+
+loadGallery();
+loadVideos();
 
 // WhatsApp Form
 
