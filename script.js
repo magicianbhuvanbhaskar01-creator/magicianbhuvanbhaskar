@@ -76,7 +76,7 @@ async function loadWebsiteData() {
 
   document.getElementById("heroImage").src =
     data.heroImage;
-    
+      }
     }
 
   } catch (error) {
