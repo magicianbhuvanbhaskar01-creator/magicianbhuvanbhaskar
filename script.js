@@ -72,7 +72,11 @@ async function loadWebsiteData() {
 
       document.getElementById("callBtn").href =
         "tel:" + (data.phone || "");
+      if (data.heroImage) {
 
+  document.getElementById("heroImage").src =
+    data.heroImage;
+    
     }
 
   } catch (error) {
