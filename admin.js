@@ -319,3 +319,17 @@ async function loadPhotos() {
   });
 
 }
+
+window.deletePhoto = async function(id) {
+
+  if (!confirm("Delete this photo?")) {
+    return;
+  }
+
+  await deleteDoc(
+    doc(db, "gallery", id)
+  );
+
+  loadPhotos();
+
+};
