@@ -1,4 +1,7 @@
-// Firebase Imports
+// ======================
+// FIREBASE IMPORTS
+// ======================
+
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
 import {
@@ -10,7 +13,10 @@ import {
   getDocs
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-// Firebase Config
+
+// ======================
+// FIREBASE CONFIG
+// ======================
 
 const firebaseConfig = {
   apiKey: "AIzaSyCgCrXp0kh11u3ES4ZQFkjWcAcvBPnSo00",
@@ -21,12 +27,18 @@ const firebaseConfig = {
   appId: "1:11124052200:web:c5795c333510c6cfc2f95d"
 };
 
-// Firebase Init
+
+// ======================
+// FIREBASE INIT
+// ======================
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-// Loader
+
+// ======================
+// LOADER
+// ======================
 
 window.addEventListener("load", () => {
 
@@ -38,46 +50,100 @@ window.addEventListener("load", () => {
 
 });
 
-// Load Website Data
+
+// ======================
+// WEBSITE DATA
+// ======================
+
+async function loadWebsiteData() {
+
+  try {
+
+    const websiteRef =
+      doc(db, "website", "main");
+
+    const snap =
+      await getDoc(websiteRef);
+
+    if (!snap.exists()) return;
+
+    const data = snap.data();
+
+    if (data.heroImage) {
+      document.getElementById("heroImage").src =
+        data.heroImage;
+    }
+
+    if (data.name) {
+      document.getElementById("name").textContent =
+        data.name;
+    }
+
+    if (data.bio) {
+      document.getElementById("bio").textContent =
+        data.bio;
+    }
+
+  } catch (error) {
+
+    console.error(
+      "Website Data Error:",
+      error
+    );
+
+  }
+
+}
+
+loadWebsiteData();
+
+
+// ======================
+// PHOTO GALLERY
+// ======================
 
 async function loadGallery() {
 
-  const photoGallery =
+  const gallery =
     document.getElementById("photoGallery");
 
-  const snap =
-    await getDocs(collection(db, "gallery"));
+  gallery.innerHTML = "";
 
-  photoGallery.innerHTML = "";
+  const snap =
+    await getDocs(
+      collection(db, "gallery")
+    );
 
   snap.forEach((docSnap) => {
 
     const data = docSnap.data();
 
-    photoGallery.innerHTML += `
+    gallery.innerHTML += `
       <img
         src="${data.imageUrl}"
-        style="
-          width:100%;
-          max-width:300px;
-          border-radius:12px;
-          margin:10px;
-        ">
+        class="gallery-image">
     `;
 
   });
 
 }
 
+
+// ======================
+// VIDEO GALLERY
+// ======================
+
 async function loadVideos() {
 
   const videoGallery =
     document.getElementById("videoGallery");
 
-  const snap =
-    await getDocs(collection(db, "videos"));
-
   videoGallery.innerHTML = "";
+
+  const snap =
+    await getDocs(
+      collection(db, "videos")
+    );
 
   snap.forEach((docSnap) => {
 
@@ -86,13 +152,11 @@ async function loadVideos() {
     videoGallery.innerHTML += `
       <video
         controls
-        style="
-          width:100%;
-          max-width:400px;
-          border-radius:12px;
-          margin:10px;
-        ">
-        <source src="${data.videoUrl}">
+        class="gallery-video">
+
+        <source
+          src="${data.videoUrl}">
+
       </video>
     `;
 
@@ -103,77 +167,184 @@ async function loadVideos() {
 loadGallery();
 loadVideos();
 
+// ======================
+// ANALYTICS
+// ======================
+
 async function trackAnalytics() {
 
-  const analyticsRef =
-    doc(db, "analytics", "main");
+  try {
 
-  const snap =
-    await getDoc(analyticsRef);
+    const analyticsRef =
+      doc(db, "analytics", "main");
 
-  if (!snap.exists()) return;
+    const snap =
+      await getDoc(analyticsRef);
 
-  const data = snap.data();
+    if (!snap.exists()) return;
 
-  let totalVisits =
-    data.totalVisits || 0;
+    const data = snap.data();
 
-  let uniqueVisitors =
-    data.uniqueVisitors || 0;
+    let totalVisits =
+      data.totalVisits || 0;
 
-  totalVisits++;
+    let uniqueVisitors =
+      data.uniqueVisitors || 0;
 
-  if (!localStorage.getItem("visited")) {
+    totalVisits++;
 
-    uniqueVisitors++;
+    if (
+      !localStorage.getItem(
+        "visited"
+      )
+    ) {
 
-    localStorage.setItem(
-      "visited",
-      "true"
+      uniqueVisitors++;
+
+      localStorage.setItem(
+        "visited",
+        "true"
+      );
+
+    }
+
+    await setDoc(
+      analyticsRef,
+      {
+        totalVisits,
+        uniqueVisitors
+      }
+    );
+
+  } catch (error) {
+
+    console.error(
+      "Analytics Error:",
+      error
     );
 
   }
-
-  await setDoc(
-    analyticsRef,
-    {
-      totalVisits,
-      uniqueVisitors
-    }
-  );
 
 }
 
 trackAnalytics();
 
-// WhatsApp Form
 
-document
-.getElementById("bookingForm")
-.addEventListener("submit", function(e){
+// ======================
+// WHATSAPP ENQUIRY FORM
+// ======================
 
-e.preventDefault();
+const bookingForm =
+document.getElementById(
+  "bookingForm"
+);
 
-const name =
-this.querySelector("input").value;
+bookingForm.addEventListener(
+  "submit",
+  function (e) {
 
-const phone =
-this.querySelectorAll("input")[1].value;
+    e.preventDefault();
 
-const message =
-this.querySelector("textarea").value;
+    const inputs =
+      bookingForm.querySelectorAll(
+        "input"
+      );
 
-const text =
-`Hello Magician Bhuvan Bhaskar
+    const name =
+      inputs[0].value;
+
+    const phone =
+      inputs[1].value;
+
+    const location =
+      inputs[2].value;
+
+    const eventDate =
+      inputs[3].value;
+
+    const eventType =
+      inputs[4].value;
+
+    const audience =
+      inputs[5].value;
+
+    const message =
+      bookingForm.querySelector(
+        "textarea"
+      ).value;
+
+    const whatsappText =
+
+`🎩 MAGIC SHOW ENQUIRY
 
 Name: ${name}
 
 Phone: ${phone}
 
-Message: ${message}`;
+Location: ${location}
 
-window.open(
-`https://wa.me/919229609882?text=${encodeURIComponent(text)}`
+Event Date: ${eventDate}
+
+Event Type: ${eventType}
+
+Expected Audience: ${audience}
+
+Message:
+${message}`;
+
+    window.open(
+      `https://wa.me/919229609882?text=${encodeURIComponent(
+        whatsappText
+      )}`,
+      "_blank"
+    );
+
+  }
 );
 
+
+// ======================
+// AUTO SCROLL ANIMATION
+// ======================
+
+const sections =
+document.querySelectorAll(
+  ".section"
+);
+
+const observer =
+new IntersectionObserver(
+(entries) => {
+
+entries.forEach((entry) => {
+
+if (entry.isIntersecting) {
+
+entry.target.classList.add(
+"show"
+);
+
+}
+
 });
+
+},
+{
+threshold: 0.1
+}
+);
+
+sections.forEach((section) => {
+
+observer.observe(section);
+
+});
+
+
+// ======================
+// CONSOLE MESSAGE
+// ======================
+
+console.log(
+"🎩 Magician Bhuvan Bhaskar Website Loaded Successfully"
+);
