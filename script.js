@@ -109,7 +109,7 @@ async function trackAnalytics() {
 
   alert("Track Analytics Started");
 
-  try {
+  alert("Before getDoc");
   
   const analyticsRef =
     doc(db, "analytics", "main");
