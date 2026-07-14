@@ -286,3 +286,27 @@ window.uploadPhoto = async function () {
   }
 
 };
+
+async function loadPhotos() {
+
+  const gallery =
+    document.getElementById("photoGallery");
+
+  gallery.innerHTML = "";
+
+  const snap =
+    await getDocs(collection(db, "gallery"));
+
+  snap.forEach((docSnap) => {
+
+    const data = docSnap.data();
+
+    gallery.innerHTML += `
+      <div class="item">
+        <img src="${data.imageUrl}">
+      </div>
+    `;
+
+  });
+
+}
