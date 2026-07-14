@@ -10,8 +10,6 @@ import {
   getDocs
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-alert("NEW SCRIPT LOADED");
-
 // Firebase Config
 
 const firebaseConfig = {
@@ -116,8 +114,6 @@ async function trackAnalytics() {
 
   const snap =
     await getDoc(analyticsRef);
-
-  alert("After getDoc");
   
   if (!snap.exists()) return;
 
@@ -141,8 +137,6 @@ async function trackAnalytics() {
     );
 
   }
-
-  alert("Before setDoc");
   
   try {
 
@@ -154,11 +148,7 @@ async function trackAnalytics() {
     }
   );
 
-  alert("After setDoc");
-
 } catch(err) {
-
-  alert(err.message);
 
 }
 
