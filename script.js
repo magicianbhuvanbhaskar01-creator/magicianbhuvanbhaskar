@@ -108,6 +108,8 @@ loadVideos();
 async function trackAnalytics() {
 
   alert("Track Analytics Started");
+
+  try {
   
   const analyticsRef =
     doc(db, "analytics", "main");
