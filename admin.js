@@ -183,11 +183,7 @@ window.uploadPhoto = async function () {
     document.getElementById("photoStatus").innerHTML =
       error.message;
 
-  }
-
-};
-
-async function loadPhotos() {
+  async function loadPhotos() {
 
   const gallery =
     document.getElementById("photoGallery");
@@ -205,7 +201,15 @@ async function loadPhotos() {
 
     gallery.innerHTML += `
       <div class="item">
+
         <img src="${data.url}">
+
+        <button
+          class="red"
+          onclick="deletePhoto('${item.id}')">
+          Delete
+        </button>
+
       </div>
     `;
 
