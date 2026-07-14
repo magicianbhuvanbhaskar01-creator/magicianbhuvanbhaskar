@@ -105,41 +105,6 @@ loadVideos();
 
 async function trackAnalytics() {
 
-  alert("Track Analytics Started");
-
-  alert("Before getDoc");
-  
-  const analyticsRef =
-    doc(db, "analytics", "main");
-
-  const snap =
-    await getDoc(analyticsRef);
-  
-  if (!snap.exists()) return;
-
-  const data = snap.data();
-
-  let totalVisits =
-    data.totalVisits || 0;
-
-  let uniqueVisitors =
-    data.uniqueVisitors || 0;
-
-  totalVisits++;
-
-  if (!localStorage.getItem("visited")) {
-
-    uniqueVisitors++;
-
-    localStorage.setItem(
-      "visited",
-      "true"
-    );
-
-  }
-  
-  async function trackAnalytics() {
-
   const analyticsRef =
     doc(db, "analytics", "main");
 
@@ -178,6 +143,8 @@ async function trackAnalytics() {
   );
 
 }
+
+trackAnalytics();
 
 trackAnalytics();
 
