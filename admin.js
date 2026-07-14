@@ -233,3 +233,56 @@ window.uploadHero = async function () {
   }
 
 };
+
+// PHOTO GALLERY
+
+window.uploadPhoto = async function () {
+
+  const file =
+    document.getElementById("photoFile").files[0];
+
+  if (!file) {
+
+    document.getElementById("photoStatus").innerText =
+      "Please select photo";
+
+    return;
+  }
+
+  try {
+
+    const formData = new FormData();
+
+    formData.append("file", file);
+    formData.append("upload_preset", "magician_upload");
+    formData.append("folder", "magician-bhuvan/photos");
+
+    const response = await fetch(
+      "https://api.cloudinary.com/v1_1/y9ynjjvq/image/upload",
+      {
+        method: "POST",
+        body: formData
+      }
+    );
+
+    const result = await response.json();
+
+    await addDoc(
+      collection(db, "gallery"),
+      {
+        imageUrl: result.secure_url,
+        createdAt: Date.now()
+      }
+    );
+
+    document.getElementById("photoStatus").innerText =
+      "Photo Uploaded";
+
+  } catch (err) {
+
+    document.getElementById("photoStatus").innerText =
+      err.message;
+
+  }
+
+};
