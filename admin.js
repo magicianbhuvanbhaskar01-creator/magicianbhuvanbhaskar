@@ -60,10 +60,12 @@ onAuthStateChanged(auth, (user) => {
 
   if (user) {
 
-    loginBox.style.display = "none";
-    dashboard.style.display = "block";
+  loginBox.style.display = "none";
+  dashboard.style.display = "block";
 
-  } else {
+  loadData();
+
+} else {
 
     loginBox.style.display = "block";
     dashboard.style.display = "none";
