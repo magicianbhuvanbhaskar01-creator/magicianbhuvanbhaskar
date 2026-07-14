@@ -211,21 +211,7 @@ window.uploadPhoto = async function () {
         </button>
 
       </div>
-    `;
-
-  });
-
-}
-
-const oldAuthListener = onAuthStateChanged;
-
-onAuthStateChanged(auth, async (user) => {
-
-  if (!user) return;
-
-  await loadPhotos();
-
-});
+    `;o8.
 window.deletePhoto = async function (id) {
 
   const ok =
