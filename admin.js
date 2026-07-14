@@ -472,8 +472,23 @@ async function loadAnalytics() {
 
 window.changePassword = async function () {
 
+  const currentPassword =
+    document.getElementById("currentPassword").value;
+
   const newPassword =
     document.getElementById("newPassword").value;
+
+  const confirmPassword =
+    document.getElementById("confirmPassword").value;
+
+  if (newPassword !== confirmPassword) {
+
+    document.getElementById("passwordStatus").innerText =
+      "Passwords do not match";
+
+    return;
+
+  }
 
   if (newPassword.length < 6) {
 
@@ -488,6 +503,17 @@ window.changePassword = async function () {
 
     const user = auth.currentUser;
 
+    const credential =
+      EmailAuthProvider.credential(
+        user.email,
+        currentPassword
+      );
+
+    await reauthenticateWithCredential(
+      user,
+      credential
+    );
+
     await updatePassword(
       user,
       newPassword
@@ -496,8 +522,9 @@ window.changePassword = async function () {
     document.getElementById("passwordStatus").innerText =
       "Password Changed Successfully";
 
-    document.getElementById("newPassword").value =
-      "";
+    document.getElementById("currentPassword").value = "";
+    document.getElementById("newPassword").value = "";
+    document.getElementById("confirmPassword").value = "";
 
   } catch (err) {
 
