@@ -280,6 +280,8 @@ window.uploadPhoto = async function () {
     document.getElementById("photoStatus").innerText =
       "Photo Uploaded";
 
+    loadPhotos();
+    
   } catch (err) {
 
     document.getElementById("photoStatus").innerText =
