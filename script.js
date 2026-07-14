@@ -140,6 +140,8 @@ async function trackAnalytics() {
 
   }
 
+  alert("Before setDoc");
+  
   await setDoc(
     analyticsRef,
     {
@@ -148,6 +150,8 @@ async function trackAnalytics() {
     }
   );
 
+  alert("Analytics Updated");
+  
 }
 
 trackAnalytics();
