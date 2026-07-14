@@ -335,3 +335,58 @@ window.deletePhoto = async function(id) {
   loadPhotos();
 
 };
+
+// VIDEO GALLERY
+
+window.uploadVideo = async function () {
+
+  const file =
+    document.getElementById("videoFile").files[0];
+
+  if (!file) {
+
+    document.getElementById("videoStatus").innerText =
+      "Please select video";
+
+    return;
+  }
+
+  try {
+
+    const formData = new FormData();
+
+    formData.append("file", file);
+    formData.append("upload_preset", "magician_upload");
+    formData.append("folder", "magician-bhuvan/videos");
+
+    const response = await fetch(
+      "https://api.cloudinary.com/v1_1/y9ynjjvq/video/upload",
+      {
+        method: "POST",
+        body: formData
+      }
+    );
+
+    const result = await response.json();
+
+    await addDoc(
+      collection(db, "videos"),
+      {
+        videoUrl: result.secure_url,
+        createdAt: Date.now()
+      }
+    );
+
+    document.getElementById("videoStatus").innerText =
+      "Video Uploaded";
+
+    loadVideos();
+
+  } catch (err) {
+
+    document.getElementById("videoStatus").innerText =
+      err.message;
+
+  }
+
+};
