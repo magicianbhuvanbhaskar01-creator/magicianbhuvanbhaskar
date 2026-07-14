@@ -147,3 +147,78 @@ async function uploadToCloudinary(file) {
   return await response.json();
 
 }
+window.uploadPhoto = async function () {
+
+  const file =
+    document.getElementById("photoFile").files[0];
+
+  if (!file) {
+    alert("Photo Select Karo");
+    return;
+  }
+
+  try {
+
+    document.getElementById("photoStatus").innerHTML =
+      "Uploading...";
+
+    const result =
+      await uploadToCloudinary(file);
+
+    await addDoc(
+      collection(db, "gallery"),
+      {
+        url: result.secure_url,
+        createdAt: Date.now()
+      }
+    );
+
+    document.getElementById("photoStatus").innerHTML =
+      "Photo Uploaded ✅";
+
+    await loadPhotos();
+
+  } catch (error) {
+
+    document.getElementById("photoStatus").innerHTML =
+      error.message;
+
+  }
+
+};
+
+async function loadPhotos() {
+
+  const gallery =
+    document.getElementById("photoGallery");
+
+  if (!gallery) return;
+
+  gallery.innerHTML = "";
+
+  const snap =
+    await getDocs(collection(db, "gallery"));
+
+  snap.forEach((item) => {
+
+    const data = item.data();
+
+    gallery.innerHTML += `
+      <div class="item">
+        <img src="${data.url}">
+      </div>
+    `;
+
+  });
+
+}
+
+const oldAuthListener = onAuthStateChanged;
+
+onAuthStateChanged(auth, async (user) => {
+
+  if (!user) return;
+
+  await loadPhotos();
+
+});
