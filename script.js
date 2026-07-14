@@ -152,6 +152,8 @@ async function trackAnalytics() {
     }
   );
 
+  alert("After setDoc");
+  
   alert("Analytics Updated");
   
 }
