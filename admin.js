@@ -440,3 +440,29 @@ window.deleteVideo = async function(id) {
   loadVideos();
 
 };
+
+async function loadAnalytics() {
+
+  try {
+
+    const snap = await getDoc(
+      doc(db, "analytics", "main")
+    );
+
+    if (!snap.exists()) return;
+
+    const data = snap.data();
+
+    document.getElementById("totalVisits").innerText =
+      data.totalVisits || 0;
+
+    document.getElementById("uniqueVisitors").innerText =
+      data.uniqueVisitors || 0;
+
+  } catch (err) {
+
+    console.log(err);
+
+  }
+
+}
