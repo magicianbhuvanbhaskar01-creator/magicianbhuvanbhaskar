@@ -168,6 +168,7 @@ async function loadData() {
         data.youtube || "";
 
       loadPhotos();
+      loadVideos();
       
     }
 
