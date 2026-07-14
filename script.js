@@ -117,6 +117,8 @@ async function trackAnalytics() {
   const snap =
     await getDoc(analyticsRef);
 
+  alert("After getDoc");
+  
   if (!snap.exists()) return;
 
   const data = snap.data();
