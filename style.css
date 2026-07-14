@@ -1,4 +1,11 @@
 /* =========================
+   GOOGLE FONT
+========================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+
+/* =========================
    RESET
 ========================= */
 
@@ -6,19 +13,16 @@
 margin:0;
 padding:0;
 box-sizing:border-box;
-}
-
-html{
 scroll-behavior:smooth;
 }
 
 body{
-font-family:Arial,sans-serif;
+font-family:'Poppins',sans-serif;
 background:#000;
 color:#fff;
-line-height:1.6;
 overflow-x:hidden;
 }
+
 
 /* =========================
    LOADER
@@ -29,109 +33,171 @@ position:fixed;
 top:0;
 left:0;
 width:100%;
-height:100vh;
+height:100%;
 background:#000;
 display:flex;
 flex-direction:column;
 justify-content:center;
 align-items:center;
-text-align:center;
-padding:20px;
-z-index:9999;
+z-index:99999;
+transition:0.5s;
 }
 
-#loader img{
-width:180px;
-height:180px;
-object-fit:cover;
-border-radius:50%;
-border:3px solid gold;
+.magic-logo{
+font-size:70px;
 margin-bottom:20px;
+animation:float 2s infinite ease-in-out;
 }
 
 #loader h1{
-font-size:22px;
-color:gold;
-margin-bottom:10px;
+font-size:28px;
+color:#d4af37;
+text-align:center;
+padding:0 20px;
 }
 
-#loader h2{
-font-size:18px;
-color:#fff;
+#loader p{
+margin-top:10px;
+color:#ddd;
+font-size:15px;
 }
+
+.loader-line{
+width:220px;
+height:4px;
+background:#222;
+margin-top:25px;
+border-radius:50px;
+overflow:hidden;
+position:relative;
+}
+
+.loader-line::before{
+content:"";
+position:absolute;
+left:-100%;
+top:0;
+width:100%;
+height:100%;
+background:#d4af37;
+animation:loading 2s infinite;
+}
+
+@keyframes loading{
+
+0%{
+left:-100%;
+}
+
+100%{
+left:100%;
+}
+
+}
+
+@keyframes float{
+
+0%,100%{
+transform:translateY(0);
+}
+
+50%{
+transform:translateY(-10px);
+}
+
+}
+
 
 /* =========================
-   HERO
+   HERO PHOTO
 ========================= */
 
 .hero{
-position:relative;
 width:100%;
-min-height:100vh;
-overflow:hidden;
 }
 
-#heroImage{
+.hero img{
 width:100%;
-height:100vh;
-object-fit:cover;
 display:block;
+object-fit:cover;
+border-bottom:2px solid #d4af37;
 }
 
-.overlay{
-position:absolute;
-top:0;
-left:0;
-width:100%;
-height:100%;
-background:rgba(0,0,0,.45);
-display:flex;
-flex-direction:column;
-justify-content:center;
-align-items:center;
+
+/* =========================
+   HERO INFO
+========================= */
+
+.hero-info{
 text-align:center;
-padding:20px;
+padding:35px 20px;
 }
 
-#name{
-font-size:42px;
-font-weight:bold;
-color:gold;
-margin-bottom:10px;
-text-shadow:0 0 15px rgba(255,215,0,.7);
+.hero-info h1{
+font-size:34px;
+font-weight:800;
+color:#d4af37;
+line-height:1.2;
+}
+
+.location{
+margin-top:15px;
+font-size:18px;
+color:#e5e5e5;
 }
 
 .tagline{
-font-size:20px;
-margin-bottom:25px;
+margin-top:12px;
+font-size:17px;
+color:#fff;
 }
+
+.scroll-indicator{
+margin-top:18px;
+font-size:16px;
+color:#d4af37;
+cursor:pointer;
+animation:bounce 1.5s infinite;
+}
+
+@keyframes bounce{
+
+0%,100%{
+transform:translateY(0);
+}
+
+50%{
+transform:translateY(8px);
+}
+
+}
+
 
 /* =========================
    BUTTONS
 ========================= */
 
-.hero-buttons,
-.social-buttons{
+.hero-buttons{
 display:flex;
-gap:12px;
 justify-content:center;
+gap:15px;
 flex-wrap:wrap;
+margin-top:25px;
 }
 
 .btn{
-display:inline-block;
-padding:12px 22px;
-background:gold;
+background:#d4af37;
 color:#000;
 text-decoration:none;
-font-weight:bold;
-border-radius:10px;
-transition:.3s;
+padding:12px 22px;
+font-weight:700;
+border-radius:50px;
+transition:0.3s;
 }
 
 .btn:hover{
 transform:translateY(-3px);
-box-shadow:0 0 15px rgba(255,215,0,.4);
+box-shadow:0 0 15px #d4af37;
 }
 
 /* =========================
@@ -139,22 +205,30 @@ box-shadow:0 0 15px rgba(255,215,0,.4);
 ========================= */
 
 .stats{
-display:flex;
-justify-content:center;
-align-items:center;
-gap:30px;
-padding:30px 20px;
-background:#111;
-flex-wrap:wrap;
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(120px,1fr));
+gap:15px;
+padding:25px 20px;
 }
 
 .stat-box{
+background:#111;
+border:1px solid #d4af37;
+border-radius:15px;
+padding:20px;
 text-align:center;
+transition:0.3s;
+}
+
+.stat-box:hover{
+transform:translateY(-5px);
+box-shadow:0 0 20px rgba(212,175,55,0.4);
 }
 
 .stat-box h2{
-font-size:30px;
-color:gold;
+font-size:32px;
+color:#d4af37;
+margin-bottom:8px;
 }
 
 .stat-box p{
@@ -162,17 +236,16 @@ font-size:15px;
 color:#ddd;
 }
 
+
 /* =========================
-   SECTION
+   SECTIONS
 ========================= */
 
 .section{
 padding:60px 20px;
-max-width:1200px;
-margin:auto;
 opacity:0;
 transform:translateY(40px);
-transition:.8s;
+transition:0.8s;
 }
 
 .section.show{
@@ -182,9 +255,89 @@ transform:translateY(0);
 
 .section h2{
 text-align:center;
-font-size:32px;
+font-size:30px;
 margin-bottom:30px;
-color:gold;
+color:#d4af37;
+font-weight:700;
+}
+
+
+/* =========================
+   CARDS
+========================= */
+
+.cards{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(170px,1fr));
+gap:15px;
+}
+
+.card{
+background:#111;
+border:1px solid #d4af37;
+border-radius:15px;
+padding:18px;
+text-align:center;
+font-weight:600;
+transition:0.3s;
+cursor:pointer;
+}
+
+.card:hover{
+transform:translateY(-6px);
+box-shadow:0 0 18px rgba(212,175,55,0.5);
+background:#151515;
+}
+
+
+/* =========================
+   ABOUT SECTION
+========================= */
+
+#bio{
+max-width:900px;
+margin:auto;
+text-align:center;
+font-size:17px;
+line-height:1.9;
+color:#e5e5e5;
+}
+
+
+/* =========================
+   GOLD DIVIDER
+========================= */
+
+.section::after{
+content:"";
+display:block;
+width:80px;
+height:3px;
+background:#d4af37;
+margin:30px auto 0;
+border-radius:50px;
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:768px){
+
+.section h2{
+font-size:24px;
+}
+
+.card{
+font-size:15px;
+padding:15px;
+}
+
+.stat-box h2{
+font-size:26px;
+}
+
 }
 
 /* =========================
@@ -193,22 +346,24 @@ color:gold;
 
 .photo-grid{
 display:grid;
-grid-template-columns:repeat(2,1fr);
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
 gap:15px;
 }
 
 .gallery-image{
 width:100%;
-height:260px;
+height:280px;
 object-fit:cover;
-border-radius:12px;
-border:2px solid #222;
-transition:.3s;
+border-radius:15px;
+border:2px solid #d4af37;
+transition:0.4s;
 }
 
 .gallery-image:hover{
 transform:scale(1.03);
+box-shadow:0 0 25px rgba(212,175,55,0.5);
 }
+
 
 /* =========================
    VIDEO GALLERY
@@ -216,58 +371,20 @@ transform:scale(1.03);
 
 .video-grid{
 display:grid;
-grid-template-columns:repeat(2,1fr);
-gap:15px;
+grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+gap:20px;
 }
 
 .gallery-video{
 width:100%;
-border-radius:12px;
-border:2px solid rgba(255,215,0,.2);
-background:#111;
+border-radius:15px;
+border:2px solid #d4af37;
+background:#000;
 }
+
 
 /* =========================
-   CARDS
-========================= */
-
-.cards{
-display:grid;
-grid-template-columns:repeat(2,1fr);
-gap:15px;
-}
-
-.card{
-background:#111;
-border:1px solid rgba(255,215,0,.3);
-border-radius:12px;
-padding:18px;
-text-align:center;
-font-weight:bold;
-transition:.3s;
-}
-
-.card:hover{
-transform:translateY(-5px);
-border-color:gold;
-box-shadow:0 0 15px rgba(255,215,0,.3);
-}
-
-/* =========================
-   ABOUT
-========================= */
-
-#bio{
-max-width:900px;
-margin:auto;
-text-align:center;
-font-size:18px;
-line-height:1.8;
-color:#ddd;
-}
-
-/* =========================
-   FORM
+   BOOKING FORM
 ========================= */
 
 #bookingForm{
@@ -281,127 +398,152 @@ gap:15px;
 #bookingForm input,
 #bookingForm textarea{
 width:100%;
-padding:14px;
+padding:15px;
 background:#111;
-border:1px solid #333;
-border-radius:10px;
+border:1px solid #d4af37;
+border-radius:12px;
 color:#fff;
-font-size:16px;
+font-size:15px;
+outline:none;
 }
 
 #bookingForm textarea{
-height:120px;
+height:140px;
 resize:none;
 }
 
 #bookingForm input:focus,
 #bookingForm textarea:focus{
-outline:none;
-border-color:gold;
+box-shadow:0 0 15px rgba(212,175,55,0.4);
 }
 
 .submit-btn{
-padding:15px;
-background:gold;
+background:#d4af37;
 color:#000;
 border:none;
-border-radius:10px;
-font-size:17px;
-font-weight:bold;
+padding:15px;
+font-weight:700;
+font-size:16px;
+border-radius:50px;
 cursor:pointer;
-transition:.3s;
+transition:0.3s;
 }
 
 .submit-btn:hover{
 transform:translateY(-3px);
+box-shadow:0 0 20px rgba(212,175,55,0.6);
 }
+
+
+/* =========================
+   SOCIAL BUTTONS
+========================= */
+
+.social-buttons{
+display:flex;
+justify-content:center;
+flex-wrap:wrap;
+gap:15px;
+}
+
 
 /* =========================
    VISITING CARD
 ========================= */
 
 .card-image{
-display:block;
 width:100%;
 max-width:700px;
+display:block;
 margin:auto;
 border-radius:15px;
-border:2px solid gold;
-box-shadow:0 0 20px rgba(255,215,0,.3);
+border:2px solid #d4af37;
+box-shadow:0 0 25px rgba(212,175,55,0.25);
 }
+
 
 /* =========================
    FOOTER
 ========================= */
 
 footer{
-background:#111;
-padding:40px 20px;
+background:#080808;
+padding:50px 20px;
 text-align:center;
-border-top:1px solid rgba(255,215,0,.2);
+border-top:2px solid #d4af37;
+margin-top:40px;
+cursor:pointer;
 }
 
 footer h3{
-color:gold;
-margin-bottom:10px;
+color:#d4af37;
+font-size:28px;
+margin-bottom:15px;
 }
 
 footer p{
-margin:8px 0;
-color:#ccc;
+color:#ddd;
+line-height:1.8;
+margin-bottom:10px;
 }
 
+
 /* =========================
-   MOBILE
+   SCROLLBAR
+========================= */
+
+::-webkit-scrollbar{
+width:8px;
+}
+
+::-webkit-scrollbar-track{
+background:#111;
+}
+
+::-webkit-scrollbar-thumb{
+background:#d4af37;
+border-radius:20px;
+}
+
+
+/* =========================
+   MOBILE OPTIMIZATION
 ========================= */
 
 @media(max-width:768px){
 
-#name{
+.hero-info h1{
 font-size:28px;
 }
 
-.tagline{
+.location{
 font-size:16px;
 }
 
-.photo-grid{
-grid-template-columns:1fr;
+.tagline{
+font-size:15px;
+}
+
+.gallery-image{
+height:220px;
 }
 
 .video-grid{
 grid-template-columns:1fr;
 }
 
-.cards{
+.photo-grid{
 grid-template-columns:1fr;
-}
-
-.hero-buttons,
-.social-buttons{
-flex-direction:column;
-width:100%;
 }
 
 .btn{
 width:100%;
+max-width:250px;
 text-align:center;
 }
 
-.section h2{
-font-size:26px;
-}
-
-#bio{
-font-size:16px;
-}
-
-.stats{
-gap:15px;
-}
-
-.stat-box h2{
-font-size:24px;
+footer h3{
+font-size:22px;
 }
 
 }
