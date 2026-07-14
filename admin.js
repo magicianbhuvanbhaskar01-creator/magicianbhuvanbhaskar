@@ -443,29 +443,15 @@ window.deleteVideo = async function(id) {
 
 async function loadAnalytics() {
 
-  alert("Analytics Function Started");
-
   try {
 
     const snap = await getDoc(
       doc(db, "analytics", "main")
     );
 
-    alert("Firestore Read Complete");
-
-    if (!snap.exists()) {
-
-      alert("Document Not Found");
-      return;
-
-    }
+    if (!snap.exists()) return;
 
     const data = snap.data();
-
-    alert(
-      "Visits: " + data.totalVisits +
-      " Unique: " + data.uniqueVisitors
-    );
 
     document.getElementById("totalVisits").innerText =
       data.totalVisits || 0;
@@ -475,7 +461,6 @@ async function loadAnalytics() {
 
   } catch (err) {
 
-    alert(err.message);
     console.log(err);
 
   }
