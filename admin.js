@@ -169,6 +169,7 @@ async function loadData() {
 
       loadPhotos();
       loadVideos();
+      loadAnalytics();
       
     }
 
