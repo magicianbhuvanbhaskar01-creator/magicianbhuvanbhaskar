@@ -7,6 +7,13 @@ import {
   onAuthStateChanged
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
+import {
+  getFirestore,
+  doc,
+  setDoc,
+  getDoc
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
 const firebaseConfig = {
   apiKey: "AIzaSyCgCrXp0kh11u3ES4ZQFkjWcAcvBPnSo00",
   authDomain: "magicianbhuvanbhaskar-b6c70.firebaseapp.com",
@@ -18,6 +25,7 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
+const db = getFirestore(app);
 
 window.login = async function () {
 
@@ -52,20 +60,17 @@ window.logout = async function () {
 
 onAuthStateChanged(auth, (user) => {
 
-  const loginBox =
-    document.getElementById("loginBox");
-
-  const dashboard =
-    document.getElementById("dashboard");
+  const loginBox = document.getElementById("loginBox");
+  const dashboard = document.getElementById("dashboard");
 
   if (user) {
 
-  loginBox.style.display = "none";
-  dashboard.style.display = "block";
+    loginBox.style.display = "none";
+    dashboard.style.display = "block";
 
-  loadData();
+    loadData();
 
-} else {
+  } else {
 
     loginBox.style.display = "block";
     dashboard.style.display = "none";
@@ -73,14 +78,6 @@ onAuthStateChanged(auth, (user) => {
   }
 
 });
-import {
-  getFirestore,
-  doc,
-  setDoc,
-  getDoc
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
-const db = getFirestore(app);
 
 window.saveData = async function () {
 
@@ -116,8 +113,9 @@ async function loadData() {
 
   try {
 
-    const snap =
-      await getDoc(doc(db, "website", "main"));
+    const snap = await getDoc(
+      doc(db, "website", "main")
+    );
 
     if (snap.exists()) {
 
