@@ -146,8 +146,6 @@ async function trackAnalytics() {
 
 trackAnalytics();
 
-trackAnalytics();
-
 // WhatsApp Form
 
 document
