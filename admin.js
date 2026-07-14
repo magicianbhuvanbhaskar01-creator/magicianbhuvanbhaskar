@@ -390,3 +390,50 @@ window.uploadVideo = async function () {
   }
 
 };
+async function loadVideos() {
+
+  const gallery =
+    document.getElementById("videoGallery");
+
+  gallery.innerHTML = "";
+
+  const snap =
+    await getDocs(collection(db, "videos"));
+
+  snap.forEach((docSnap) => {
+
+    const data = docSnap.data();
+
+    gallery.innerHTML += `
+      <div class="item">
+
+        <video controls>
+          <source src="${data.videoUrl}">
+        </video>
+
+        <button
+          class="red"
+          onclick="deleteVideo('${docSnap.id}')">
+          Delete Video
+        </button>
+
+      </div>
+    `;
+
+  });
+
+}
+
+window.deleteVideo = async function(id) {
+
+  if (!confirm("Delete this video?")) {
+    return;
+  }
+
+  await deleteDoc(
+    doc(db, "videos", id)
+  );
+
+  loadVideos();
+
+};
