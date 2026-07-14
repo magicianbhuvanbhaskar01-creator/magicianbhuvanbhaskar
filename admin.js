@@ -467,3 +467,41 @@ async function loadAnalytics() {
   }
 
 }
+
+window.changePassword = async function () {
+
+  const newPassword =
+    document.getElementById("newPassword").value;
+
+  if (newPassword.length < 6) {
+
+    document.getElementById("passwordStatus").innerText =
+      "Password must be at least 6 characters";
+
+    return;
+
+  }
+
+  try {
+
+    const user = auth.currentUser;
+
+    await updatePassword(
+      user,
+      newPassword
+    );
+
+    document.getElementById("passwordStatus").innerText =
+      "Password Changed Successfully";
+
+    document.getElementById("newPassword").value =
+      "";
+
+  } catch (err) {
+
+    document.getElementById("passwordStatus").innerText =
+      err.message;
+
+  }
+
+};
