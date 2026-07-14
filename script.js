@@ -10,6 +10,8 @@ import {
   getDocs
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
+alert("NEW SCRIPT LOADED");
+
 // Firebase Config
 
 const firebaseConfig = {
