@@ -167,6 +167,8 @@ async function loadData() {
       document.getElementById("youtube").value =
         data.youtube || "";
 
+      loadPhotos();
+      
     }
 
   } catch (err) {
