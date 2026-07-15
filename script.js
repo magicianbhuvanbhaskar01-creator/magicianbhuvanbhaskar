@@ -422,28 +422,35 @@ bookingForm.addEventListener(
 
     e.preventDefault();
 
-    const inputs =
+    const name =
       bookingForm.querySelectorAll(
         "input"
-      );
-
-    const name =
-      inputs[0].value;
+      )[0].value;
 
     const phone =
-      inputs[1].value;
+      bookingForm.querySelectorAll(
+        "input"
+      )[1].value;
 
     const location =
-      inputs[2].value;
+      bookingForm.querySelectorAll(
+        "input"
+      )[2].value;
 
     const eventDate =
-      inputs[3].value;
+      bookingForm.querySelectorAll(
+        "input"
+      )[3].value;
 
     const eventType =
-      inputs[4].value;
+      bookingForm.querySelectorAll(
+        "select"
+      )[0].value;
 
     const audience =
-      inputs[5].value;
+      bookingForm.querySelectorAll(
+        "select"
+      )[1].value;
 
     const message =
       bookingForm.querySelector(
@@ -478,7 +485,6 @@ whatsappText
 
 });
 }
-
 
 // ======================
 // SCROLL DOWN BUTTON
