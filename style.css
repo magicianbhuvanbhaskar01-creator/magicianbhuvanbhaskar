@@ -382,10 +382,12 @@ gap:20px;
 }
 
 .gallery-video{
-width:100%;
-border-radius:15px;
-border:2px solid #d4af37;
-background:#000;
+  width:100%;
+  height:auto;
+  border-radius:15px;
+  border:2px solid #d4af37;
+  background:#000;
+  display:block;
 }
 
 
