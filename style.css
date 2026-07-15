@@ -483,6 +483,9 @@ text-align:center;
 border-top:2px solid #d4af37;
 margin-top:40px;
 cursor:pointer;
+
+-webkit-tap-highlight-color: transparent;
+user-select:none;
 }
 
 footer h3{
