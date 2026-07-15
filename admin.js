@@ -57,8 +57,6 @@ window.login = async function () {
   document.getElementById("loginStatus").innerText =
     "Login Successful";
 
-}
-
   } catch (error) {
 
     document.getElementById("loginStatus").innerText =
