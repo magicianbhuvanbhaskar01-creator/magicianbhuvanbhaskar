@@ -405,7 +405,7 @@ gap:15px;
 
 #bookingForm input,
 #bookingForm textarea
-bookingForm select{
+#bookingForm select{
 width:100%;
 padding:15px;
 background:#111;
