@@ -82,6 +82,7 @@ async function loadWebsiteData() {
 
     const data = snap.data();
 
+    // HERO IMAGE
     if (
       data.heroImage &&
       document.getElementById("heroImage")
@@ -93,6 +94,7 @@ async function loadWebsiteData() {
 
     }
 
+    // NAME
     if (
       data.name &&
       document.getElementById("name")
@@ -104,6 +106,7 @@ async function loadWebsiteData() {
 
     }
 
+    // BIO
     if (
       data.bio &&
       document.getElementById("bio")
@@ -114,100 +117,97 @@ async function loadWebsiteData() {
       ).textContent = data.bio;
 
     }
-    
-      if (
-  data.shows &&
-  document.getElementById("shows")
-) {
 
-  document.getElementById(
-    "shows"
-  ).textContent =
-    data.shows + "+";
+    // SHOWS
+    if (
+      data.shows &&
+      document.getElementById("shows")
+    ) {
 
-}
+      document.getElementById(
+        "shows"
+      ).textContent =
+        data.shows + "+";
 
-if (
-  data.cities &&
-  document.getElementById("cities")
-) {
+    }
 
-  document.getElementById(
-    "cities"
-  ).textContent =
-    data.cities + "+";
+    // CITIES
+    if (
+      data.cities &&
+      document.getElementById("cities")
+    ) {
 
-}
+      document.getElementById(
+        "cities"
+      ).textContent =
+        data.cities + "+";
 
-if (
-  data.years &&
-  document.getElementById("years")
-) {
+    }
 
-  document.getElementById(
-    "years"
-  ).textContent =
-    data.years + "+";
+    // YEARS
+    if (
+      data.years &&
+      document.getElementById("years")
+    ) {
 
-}
-      // PHONE
+      document.getElementById(
+        "years"
+      ).textContent =
+        data.years + "+";
 
-if (
-  data.phone &&
-  document.getElementById("callBtn")
-) {
+    }
 
-  document.getElementById(
-    "callBtn"
-  ).href =
-    "tel:" + data.phone;
+    // PHONE
+    if (
+      data.phone &&
+      document.getElementById("callBtn")
+    ) {
 
-}
+      document.getElementById(
+        "callBtn"
+      ).href =
+        "tel:" + data.phone;
 
+    }
 
-// WHATSAPP
+    // WHATSAPP
+    if (
+      data.phone &&
+      document.getElementById("whatsappBtn")
+    ) {
 
-if (
-  data.phone &&
-  document.getElementById("whatsappBtn")
-) {
+      document.getElementById(
+        "whatsappBtn"
+      ).href =
+        "https://wa.me/" +
+        data.phone.replace(/\D/g, "");
 
-  document.getElementById(
-    "whatsappBtn"
-  ).href =
-    "https://wa.me/" + data.phone.replace("+","");
+    }
 
-}
+    // INSTAGRAM
+    if (
+      data.instagram &&
+      document.getElementById("instagramBtn")
+    ) {
 
+      document.getElementById(
+        "instagramBtn"
+      ).href =
+        data.instagram;
 
-// INSTAGRAM
+    }
 
-if (
-  data.instagram &&
-  document.getElementById("instagramBtn")
-) {
+    // YOUTUBE
+    if (
+      data.youtube &&
+      document.getElementById("youtubeBtn")
+    ) {
 
-  document.getElementById(
-    "instagramBtn"
-  ).href =
-    data.instagram;
+      document.getElementById(
+        "youtubeBtn"
+      ).href =
+        data.youtube;
 
-}
-
-
-// YOUTUBE
-
-if (
-  data.youtube &&
-  document.getElementById("youtubeBtn")
-) {
-
-  document.getElementById(
-    "youtubeBtn"
-  ).href =
-    data.youtube;
-
-}
     }
 
   } catch (error) {
