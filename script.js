@@ -113,6 +113,42 @@ async function loadWebsiteData() {
         "bio"
       ).textContent = data.bio;
 
+      if (
+  data.shows &&
+  document.getElementById("shows")
+) {
+
+  document.getElementById(
+    "shows"
+  ).textContent =
+    data.shows + "+";
+
+}
+
+if (
+  data.cities &&
+  document.getElementById("cities")
+) {
+
+  document.getElementById(
+    "cities"
+  ).textContent =
+    data.cities + "+";
+
+}
+
+if (
+  data.years &&
+  document.getElementById("years")
+) {
+
+  document.getElementById(
+    "years"
+  ).textContent =
+    data.years + "+";
+
+}
+      
     }
 
   } catch (error) {
