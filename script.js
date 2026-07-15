@@ -148,7 +148,64 @@ if (
     data.years + "+";
 
 }
-      
+      // PHONE
+
+if (
+  data.phone &&
+  document.getElementById("callBtn")
+) {
+
+  document.getElementById(
+    "callBtn"
+  ).href =
+    "tel:" + data.phone;
+
+}
+
+
+// WHATSAPP
+
+if (
+  data.phone &&
+  document.getElementById("whatsappBtn")
+) {
+
+  document.getElementById(
+    "whatsappBtn"
+  ).href =
+    "https://wa.me/" + data.phone.replace("+","");
+
+}
+
+
+// INSTAGRAM
+
+if (
+  data.instagram &&
+  document.getElementById("instagramBtn")
+) {
+
+  document.getElementById(
+    "instagramBtn"
+  ).href =
+    data.instagram;
+
+}
+
+
+// YOUTUBE
+
+if (
+  data.youtube &&
+  document.getElementById("youtubeBtn")
+) {
+
+  document.getElementById(
+    "youtubeBtn"
+  ).href =
+    data.youtube;
+
+}
     }
 
   } catch (error) {
