@@ -36,7 +36,10 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-signOut(auth).catch(() => {});
+await setPersistence(
+  auth,
+  inMemoryPersistence
+);
 
 window.login = async function () {
 
