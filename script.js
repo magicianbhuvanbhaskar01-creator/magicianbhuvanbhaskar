@@ -113,6 +113,8 @@ async function loadWebsiteData() {
         "bio"
       ).textContent = data.bio;
 
+    }
+    
       if (
   data.shows &&
   document.getElementById("shows")
