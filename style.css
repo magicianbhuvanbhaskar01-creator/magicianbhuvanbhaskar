@@ -121,7 +121,7 @@ transform:translateY(-10px);
 
 .hero img{
   width:100%;
-  height:65vh;
+  height:60vh;
   display:block;
   object-fit:cover;
   object-position:center top;
