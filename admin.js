@@ -43,14 +43,21 @@ window.login = async function () {
 
   try {
 
-    await signInWithEmailAndPassword(
-      auth,
-      email,
-      password
-    );
+  await setPersistence(
+    auth,
+    inMemoryPersistence
+  );
 
-    document.getElementById("loginStatus").innerText =
-      "Login Successful";
+  await signInWithEmailAndPassword(
+    auth,
+    email,
+    password
+  );
+
+  document.getElementById("loginStatus").innerText =
+    "Login Successful";
+
+}
 
   } catch (error) {
 
