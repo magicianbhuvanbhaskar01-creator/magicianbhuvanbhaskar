@@ -1,3 +1,5 @@
+alert("SCRIPT CHAL RAHA HAI");
+
 // ======================
 // FIREBASE IMPORTS
 // ======================
