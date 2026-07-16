@@ -242,10 +242,12 @@ async function loadGallery() {
 
     gallery.innerHTML = "";
 
-    const snap =
-      await getDocs(
-        collection(db, "gallery")
-      );
+    const snap = await getDocs(
+  query(
+    collection(db, "gallery"),
+    orderBy("order", "asc")
+  )
+);
 
     snap.forEach((docSnap) => {
 
@@ -290,10 +292,12 @@ async function loadVideos() {
 
     videoGallery.innerHTML = "";
 
-    const snap =
-      await getDocs(
-        collection(db, "videos")
-      );
+    const snap = await getDocs(
+  query(
+    collection(db, "videos"),
+    orderBy("order", "asc")
+  )
+);
 
     snap.forEach((docSnap) => {
 
