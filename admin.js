@@ -455,11 +455,19 @@ async function loadVideos() {
           <source src="${data.videoUrl}">
         </video>
 
-        <button
-          class="red"
-          onclick="deleteVideo('${docSnap.id}')">
-          Delete Video
-        </button>
+        <button onclick="moveVideoUp('${docSnap.id}')">
+↑
+</button>
+
+<button onclick="moveVideoDown('${docSnap.id}')">
+↓
+</button>
+
+<button
+class="red"
+onclick="deleteVideo('${docSnap.id}')">
+Delete Video
+</button>
 
       </div>
     `;
