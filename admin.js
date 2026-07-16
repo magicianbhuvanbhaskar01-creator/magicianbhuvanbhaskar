@@ -293,7 +293,6 @@ window.uploadPhoto = async function () {
       "Photo Uploaded";
 
     loadPhotos();
-    loadVideos();
     
   } catch (err) {
 
