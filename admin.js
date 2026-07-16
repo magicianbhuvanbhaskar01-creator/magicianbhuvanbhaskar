@@ -621,3 +621,143 @@ document.addEventListener(
   },
   true
 );
+
+window.movePhotoUp = async function(id) {
+
+  const snap = await getDocs(
+    query(collection(db, "gallery"), orderBy("order", "asc"))
+  );
+
+  const photos = [];
+
+  snap.forEach(docSnap => {
+    photos.push({
+      id: docSnap.id,
+      ...docSnap.data()
+    });
+  });
+
+  const index = photos.findIndex(p => p.id === id);
+
+  if (index <= 0) return;
+
+  const current = photos[index];
+  const previous = photos[index - 1];
+
+  await updateDoc(
+    doc(db, "gallery", current.id),
+    { order: previous.order }
+  );
+
+  await updateDoc(
+    doc(db, "gallery", previous.id),
+    { order: current.order }
+  );
+
+  loadPhotos();
+};
+
+window.movePhotoDown = async function(id) {
+
+  const snap = await getDocs(
+    query(collection(db, "gallery"), orderBy("order", "asc"))
+  );
+
+  const photos = [];
+
+  snap.forEach(docSnap => {
+    photos.push({
+      id: docSnap.id,
+      ...docSnap.data()
+    });
+  });
+
+  const index = photos.findIndex(p => p.id === id);
+
+  if (index === photos.length - 1) return;
+
+  const current = photos[index];
+  const next = photos[index + 1];
+
+  await updateDoc(
+    doc(db, "gallery", current.id),
+    { order: next.order }
+  );
+
+  await updateDoc(
+    doc(db, "gallery", next.id),
+    { order: current.order }
+  );
+
+  loadPhotos();
+};
+
+window.moveVideoUp = async function(id) {
+
+  const snap = await getDocs(
+    query(collection(db, "videos"), orderBy("order", "asc"))
+  );
+
+  const videos = [];
+
+  snap.forEach(docSnap => {
+    videos.push({
+      id: docSnap.id,
+      ...docSnap.data()
+    });
+  });
+
+  const index = videos.findIndex(v => v.id === id);
+
+  if (index <= 0) return;
+
+  const current = videos[index];
+  const previous = videos[index - 1];
+
+  await updateDoc(
+    doc(db, "videos", current.id),
+    { order: previous.order }
+  );
+
+  await updateDoc(
+    doc(db, "videos", previous.id),
+    { order: current.order }
+  );
+
+  loadVideos();
+};
+
+window.moveVideoDown = async function(id) {
+
+  const snap = await getDocs(
+    query(collection(db, "videos"), orderBy("order", "asc"))
+  );
+
+  const videos = [];
+
+  snap.forEach(docSnap => {
+    videos.push({
+      id: docSnap.id,
+      ...docSnap.data()
+    });
+  });
+
+  const index = videos.findIndex(v => v.id === id);
+
+  if (index === videos.length - 1) return;
+
+  const current = videos[index];
+  const next = videos[index + 1];
+
+  await updateDoc(
+    doc(db, "videos", current.id),
+    { order: next.order }
+  );
+
+  await updateDoc(
+    doc(db, "videos", next.id),
+    { order: current.order }
+  );
+
+  loadVideos();
+};
