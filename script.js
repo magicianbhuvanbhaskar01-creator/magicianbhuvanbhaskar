@@ -251,14 +251,10 @@ async function loadGallery() {
         docSnap.data();
 
       gallery.innerHTML += `
-<div class="gallery-item">
-
 <img
 src="${data.imageUrl}"
 alt="Magician Bhuvan Bhaskar"
 class="gallery-image">
-
-</div>
 `;
 
     });
