@@ -278,6 +278,7 @@ window.uploadPhoto = async function () {
           method: "POST",
           body: formData
         }
+      );
 
         console.log("Saved:", file.name);
       
