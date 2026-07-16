@@ -252,10 +252,24 @@ window.uploadHero = async function () {
 
 window.uploadPhoto = async function () {
 
-  const file =
-    document.getElementById("photoFile").files[0];
+  const files =
+document.getElementById("photoFile").files;
 
-  if (!file) {
+  if (files.length === 0) {
+
+document.getElementById("photoStatus").innerText =
+"Please select photo";
+
+return;
+
+  }
+
+ window.uploadPhoto = async function () {
+
+  const files =
+    document.getElementById("photoFile").files;
+
+  if (files.length === 0) {
 
     document.getElementById("photoStatus").innerText =
       "Please select photo";
@@ -265,36 +279,47 @@ window.uploadPhoto = async function () {
 
   try {
 
-    const formData = new FormData();
+    for (const file of files) {
 
-    formData.append("file", file);
-    formData.append("upload_preset", "magician_upload");
-    formData.append("folder", "magician-bhuvan/photos");
+      const formData = new FormData();
 
-    const response = await fetch(
-      "https://api.cloudinary.com/v1_1/y9ynjjvq/image/upload",
-      {
-        method: "POST",
-        body: formData
-      }
-    );
+      formData.append("file", file);
+      formData.append("upload_preset", "magician_upload");
+      formData.append("folder", "magician-bhuvan/photos");
 
-    const result = await response.json();
+      const response = await fetch(
+        "https://api.cloudinary.com/v1_1/y9ynjjvq/image/upload",
+        {
+          method: "POST",
+          body: formData
+        }
+      );
 
-    await addDoc(
-      collection(db, "gallery"),
-      {
-        imageUrl: result.secure_url,
-        createdAt: Date.now()
-      }
-    );
+      const result = await response.json();
+
+      await addDoc(
+        collection(db, "gallery"),
+        {
+          imageUrl: result.secure_url,
+          createdAt: Date.now()
+        }
+      );
+
+    }
 
     document.getElementById("photoStatus").innerText =
-      "Photo Uploaded";
+      "Photos Uploaded";
 
     loadPhotos();
-    
+
   } catch (err) {
+
+    document.getElementById("photoStatus").innerText =
+      err.message;
+
+  }
+
+};
 
     document.getElementById("photoStatus").innerText =
       err.message;
