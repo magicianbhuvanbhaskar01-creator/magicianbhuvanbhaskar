@@ -322,14 +322,25 @@ async function loadPhotos() {
     const data = docSnap.data();
 
     gallery.innerHTML += `
-      <div class="item">
-        <img src="${data.imageUrl}">
-        <button class="red"
-          onclick="deletePhoto('${docSnap.id}')">
-          Delete Photo
-        </button>
-      </div>
-    `;
+  <div class="item">
+
+    <img src="${data.imageUrl}">
+
+    <button onclick="movePhotoUp('${docSnap.id}')">
+      ↑
+    </button>
+
+    <button onclick="movePhotoDown('${docSnap.id}')">
+      ↓
+    </button>
+
+    <button class="red"
+      onclick="deletePhoto('${docSnap.id}')">
+      Delete Photo
+    </button>
+
+  </div>
+`;
   });
 }
 
