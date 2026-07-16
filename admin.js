@@ -337,23 +337,93 @@ async function loadPhotos() {
 
   const snap =
     await getDocs(collection(db, "gallery"));
+// PHOTO GALLERY
+
+window.uploadPhoto = async function () {
+
+  const files =
+    document.getElementById("photoFile").files;
+
+  if (files.length === 0) {
+
+    document.getElementById("photoStatus").innerText =
+      "Please select photo";
+
+    return;
+  }
+
+  try {
+
+    for (const file of files) {
+
+      const formData = new FormData();
+
+      formData.append("file", file);
+      formData.append("upload_preset", "magician_upload");
+      formData.append("folder", "magician-bhuvan/photos");
+
+      const response = await fetch(
+        "https://api.cloudinary.com/v1_1/y9ynjjvq/image/upload",
+        {
+          method: "POST",
+          body: formData
+        }
+      );
+
+      const result = await response.json();
+
+      await addDoc(
+        collection(db, "gallery"),
+        {
+          imageUrl: result.secure_url,
+          createdAt: Date.now()
+        }
+      );
+
+    }
+
+    document.getElementById("photoStatus").innerText =
+      "Photos Uploaded Successfully";
+
+    document.getElementById("photoFile").value = "";
+
+    loadPhotos();
+
+  } catch (err) {
+
+    document.getElementById("photoStatus").innerText =
+      err.message;
+
+  }
+
+};
+
+async function loadPhotos() {
+
+  const gallery =
+    document.getElementById("photoGallery");
+
+  gallery.innerHTML = "";
+
+  const snap =
+    await getDocs(collection(db, "gallery"));
 
   snap.forEach((docSnap) => {
 
     const data = docSnap.data();
 
     gallery.innerHTML += `
-  <div class="item">
-    <img src="${data.imageUrl}">
-    
-    <button
-      class="red"
-      onclick="deletePhoto('${docSnap.id}')">
-      Delete Photo
-    </button>
+      <div class="item">
+        <img src="${data.imageUrl}">
 
-  </div>
-`;
+        <button
+          class="red"
+          onclick="deletePhoto('${docSnap.id}')">
+          Delete Photo
+        </button>
+
+      </div>
+    `;
 
   });
 
