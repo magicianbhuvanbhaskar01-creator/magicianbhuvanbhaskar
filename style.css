@@ -552,10 +552,6 @@ font-size:16px;
 font-size:15px;
 }
 
-.gallery-image{
-height:220px;
-}
-
 .video-grid{
 grid-template-columns:1fr;
 }
