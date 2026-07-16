@@ -409,13 +409,17 @@ window.uploadVideo = async function () {
         );
       }
 
-      await addDoc(
-        collection(db, "videos"),
-        {
-          videoUrl: result.secure_url,
-          createdAt: Date.now()
-        }
-      );
+      const videoSnap =
+  await getDocs(collection(db, "videos"));
+
+await addDoc(
+  collection(db, "videos"),
+  {
+    videoUrl: result.secure_url,
+    createdAt: Date.now(),
+    order: videoSnap.size + 1
+  }
+);
 
       uploadedCount++;
 
