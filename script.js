@@ -607,3 +607,23 @@ secretAdmin.addEventListener(
 console.log(
 "🎩 Magician Bhuvan Bhaskar Website Loaded Successfully"
 );
+
+document.addEventListener(
+  "play",
+  function (e) {
+
+    if (e.target.tagName !== "VIDEO") return;
+
+    document
+      .querySelectorAll("video")
+      .forEach((video) => {
+
+        if (video !== e.target) {
+          video.pause();
+        }
+
+      });
+
+  },
+  true
+);
