@@ -359,6 +359,27 @@ window.uploadPhoto = async function () {
 
       const formData = new FormData();
 
+// PHOTO GALLERY
+
+window.uploadPhoto = async function () {
+
+  const files =
+    document.getElementById("photoFile").files;
+
+  if (files.length === 0) {
+
+    document.getElementById("photoStatus").innerText =
+      "Please select photo";
+
+    return;
+  }
+
+  try {
+
+    for (const file of files) {
+
+      const formData = new FormData();
+
       formData.append("file", file);
       formData.append("upload_preset", "magician_upload");
       formData.append("folder", "magician-bhuvan/photos");
@@ -415,7 +436,7 @@ async function loadPhotos() {
 
     gallery.innerHTML += `
       <div class="item">
-        <img src="${data.imageUrl}">
+        <img src="${data.imageUrl}" loading="lazy">
 
         <button
           class="red"
