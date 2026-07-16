@@ -456,7 +456,7 @@ async function loadVideos() {
 
   const snap =
   await getDocs(
-    collection(db, "gallery")
+    collection(db, "videos")
   );
 
   snap.forEach((docSnap) => {
