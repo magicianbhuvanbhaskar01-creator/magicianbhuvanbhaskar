@@ -287,15 +287,26 @@ window.uploadPhoto = async function () {
 
       const result = await response.json();
 
-      const gallerySnap =
-  await getDocs(collection(db, "gallery"));
+      const snap = await getDocs(
+  query(
+    collection(db, "gallery"),
+    orderBy("order", "desc")
+  )
+);
+
+let nextOrder = 1;
+
+if (!snap.empty) {
+  nextOrder =
+    (snap.docs[0].data().order || 0) + 1;
+}
 
 await addDoc(
   collection(db, "gallery"),
   {
     imageUrl: result.secure_url,
     createdAt: Date.now(),
-    order: gallerySnap.size + 1
+    order: nextOrder
   }
 );
     }
@@ -413,15 +424,26 @@ window.uploadVideo = async function () {
         );
       }
 
-      const videoSnap =
-  await getDocs(collection(db, "videos"));
+      const snap = await getDocs(
+  query(
+    collection(db, "videos"),
+    orderBy("order", "desc")
+  )
+);
+
+let nextOrder = 1;
+
+if (!snap.empty) {
+  nextOrder =
+    (snap.docs[0].data().order || 0) + 1;
+}
 
 await addDoc(
   collection(db, "videos"),
   {
     videoUrl: result.secure_url,
     createdAt: Date.now(),
-    order: videoSnap.size + 1
+    order: nextOrder
   }
 );
 
