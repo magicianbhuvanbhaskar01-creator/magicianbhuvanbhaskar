@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://magicianbhuvanbhaskar01-creator.github.io/magicianbhuvanbhaskar/sitemap.xml
