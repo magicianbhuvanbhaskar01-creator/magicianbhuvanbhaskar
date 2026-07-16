@@ -281,8 +281,6 @@ window.uploadPhoto = async function () {
       );
 
         console.log("Saved:", file.name);
-      
-      );
 
       const result = await response.json();
 
