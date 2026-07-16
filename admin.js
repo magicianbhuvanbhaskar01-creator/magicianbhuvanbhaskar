@@ -264,6 +264,8 @@ window.uploadPhoto = async function () {
 
     for (const file of files) {
 
+      console.log("Uploading:", file.name);
+
       const formData = new FormData();
 
       formData.append("file", file);
@@ -276,6 +278,9 @@ window.uploadPhoto = async function () {
           method: "POST",
           body: formData
         }
+
+        console.log("Saved:", file.name);
+      
       );
 
       const result = await response.json();
