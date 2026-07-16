@@ -344,10 +344,10 @@ window.deletePhoto = async function(id) {
 
 window.uploadVideo = async function () {
 
-  const file =
-    document.getElementById("videoFile").files[0];
+  const files =
+    document.getElementById("videoFile").files;
 
-  if (!file) {
+  if (files.length === 0) {
 
     document.getElementById("videoStatus").innerText =
       "Please select video";
@@ -357,32 +357,41 @@ window.uploadVideo = async function () {
 
   try {
 
-    const formData = new FormData();
+    document.getElementById("videoStatus").innerText =
+      "Uploading...";
 
-    formData.append("file", file);
-    formData.append("upload_preset", "magician_upload");
-    formData.append("folder", "magician-bhuvan/videos");
+    for (const file of files) {
 
-    const response = await fetch(
-      "https://api.cloudinary.com/v1_1/y9ynjjvq/video/upload",
-      {
-        method: "POST",
-        body: formData
-      }
-    );
+      const formData = new FormData();
 
-    const result = await response.json();
+      formData.append("file", file);
+      formData.append("upload_preset", "magician_upload");
+      formData.append("folder", "magician-bhuvan/videos");
 
-    await addDoc(
-      collection(db, "videos"),
-      {
-        videoUrl: result.secure_url,
-        createdAt: Date.now()
-      }
-    );
+      const response = await fetch(
+        "https://api.cloudinary.com/v1_1/y9ynjjvq/video/upload",
+        {
+          method: "POST",
+          body: formData
+        }
+      );
+
+      const result = await response.json();
+
+      await addDoc(
+        collection(db, "videos"),
+        {
+          videoUrl: result.secure_url,
+          createdAt: Date.now()
+        }
+      );
+
+    }
 
     document.getElementById("videoStatus").innerText =
-      "Video Uploaded";
+      "Videos Uploaded Successfully";
+
+    document.getElementById("videoFile").value = "";
 
     loadVideos();
 
@@ -394,6 +403,7 @@ window.uploadVideo = async function () {
   }
 
 };
+
 async function loadVideos() {
 
   const gallery =
