@@ -20,7 +20,10 @@ import {
   collection,
   addDoc,
   getDocs,
-  deleteDoc
+  deleteDoc,
+  updateDoc,
+  query,
+  orderBy
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const firebaseConfig = {
