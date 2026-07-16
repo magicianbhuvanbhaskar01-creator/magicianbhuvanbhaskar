@@ -349,8 +349,9 @@ window.deletePhoto = async function(id) {
 
 window.uploadVideo = async function () {
 
-  const files =
-    document.getElementById("videoFile").files;
+  const files = document.getElementById("videoFile").files;
+
+  alert("Videos Selected: " + files.length);
 
   if (files.length === 0) {
 
@@ -363,9 +364,13 @@ window.uploadVideo = async function () {
   try {
 
     document.getElementById("videoStatus").innerText =
-      "Uploading...";
+      "Uploading Videos...";
 
-    for (const file of files) {
+    let uploadedCount = 0;
+
+    for (let i = 0; i < files.length; i++) {
+
+      const file = files[i];
 
       const formData = new FormData();
 
@@ -383,6 +388,12 @@ window.uploadVideo = async function () {
 
       const result = await response.json();
 
+      if (!response.ok) {
+        throw new Error(
+          result.error?.message || "Video upload failed"
+        );
+      }
+
       await addDoc(
         collection(db, "videos"),
         {
@@ -391,16 +402,22 @@ window.uploadVideo = async function () {
         }
       );
 
+      uploadedCount++;
+
+      document.getElementById("videoStatus").innerText =
+        `Uploaded ${uploadedCount} of ${files.length} videos`;
     }
 
     document.getElementById("videoStatus").innerText =
-      "Videos Uploaded Successfully";
+      `${uploadedCount} Videos Uploaded Successfully`;
 
     document.getElementById("videoFile").value = "";
 
     loadVideos();
 
   } catch (err) {
+
+    console.error(err);
 
     document.getElementById("videoStatus").innerText =
       err.message;
@@ -426,7 +443,7 @@ async function loadVideos() {
     gallery.innerHTML += `
       <div class="item">
 
-        <video controls>
+        <video controls preload="metadata">
           <source src="${data.videoUrl}">
         </video>
 
