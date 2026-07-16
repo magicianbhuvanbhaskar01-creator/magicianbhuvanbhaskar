@@ -350,8 +350,6 @@ window.uploadVideo = async function () {
 
   const files = document.getElementById("videoFile").files;
 
-  alert("Videos Selected: " + files.length);
-
   if (files.length === 0) {
 
     document.getElementById("videoStatus").innerText =
