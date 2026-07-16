@@ -342,35 +342,11 @@ async function loadPhotos() {
 
 window.uploadPhoto = async function () {
 
-  const files =
-    document.getElementById("photoFile").files;
+  const files = document.getElementById("photoFile").files;
 
   if (files.length === 0) {
-
     document.getElementById("photoStatus").innerText =
       "Please select photo";
-
-    return;
-  }
-
-  try {
-
-    for (const file of files) {
-
-      const formData = new FormData();
-
-// PHOTO GALLERY
-
-window.uploadPhoto = async function () {
-
-  const files =
-    document.getElementById("photoFile").files;
-
-  if (files.length === 0) {
-
-    document.getElementById("photoStatus").innerText =
-      "Please select photo";
-
     return;
   }
 
@@ -401,13 +377,10 @@ window.uploadPhoto = async function () {
           createdAt: Date.now()
         }
       );
-
     }
 
     document.getElementById("photoStatus").innerText =
       "Photos Uploaded Successfully";
-
-    document.getElementById("photoFile").value = "";
 
     loadPhotos();
 
@@ -415,9 +388,7 @@ window.uploadPhoto = async function () {
 
     document.getElementById("photoStatus").innerText =
       err.message;
-
   }
-
 };
 
 async function loadPhotos() {
@@ -436,33 +407,25 @@ async function loadPhotos() {
 
     gallery.innerHTML += `
       <div class="item">
-        <img src="${data.imageUrl}" loading="lazy">
-
-        <button
-          class="red"
+        <img src="${data.imageUrl}">
+        <button class="red"
           onclick="deletePhoto('${docSnap.id}')">
           Delete Photo
         </button>
-
       </div>
     `;
-
   });
-
 }
 
 window.deletePhoto = async function(id) {
 
-  if (!confirm("Delete this photo?")) {
-    return;
-  }
+  if (!confirm("Delete this photo?")) return;
 
   await deleteDoc(
     doc(db, "gallery", id)
   );
 
   loadPhotos();
-
 };
 
 // VIDEO GALLERY
