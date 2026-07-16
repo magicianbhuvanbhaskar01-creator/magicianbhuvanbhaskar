@@ -44,9 +44,9 @@ window.login = async function () {
   try {
 
   await setPersistence(
-    auth,
-    inMemoryPersistence
-  );
+  auth,
+  browserSessionPersistence
+);
 
   await signInWithEmailAndPassword(
     auth,
