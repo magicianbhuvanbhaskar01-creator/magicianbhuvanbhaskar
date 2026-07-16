@@ -561,3 +561,25 @@ window.changePassword = async function () {
   }
 
 };
+
+document.addEventListener(
+  "play",
+  function (e) {
+
+    const videos =
+      document.querySelectorAll("video");
+
+    videos.forEach((video) => {
+
+      if (
+        video !== e.target &&
+        !video.paused
+      ) {
+        video.pause();
+      }
+
+    });
+
+  },
+  true
+);
