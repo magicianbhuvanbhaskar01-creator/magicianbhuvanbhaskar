@@ -337,6 +337,7 @@ async function loadPhotos() {
 
   const snap =
     await getDocs(collection(db, "gallery"));
+
 // PHOTO GALLERY
 
 window.uploadPhoto = async function () {
