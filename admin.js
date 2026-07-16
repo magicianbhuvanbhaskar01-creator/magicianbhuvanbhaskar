@@ -287,13 +287,17 @@ window.uploadPhoto = async function () {
 
       const result = await response.json();
 
-      await addDoc(
-        collection(db, "gallery"),
-        {
-          imageUrl: result.secure_url,
-          createdAt: Date.now()
-        }
-      );
+      const gallerySnap =
+  await getDocs(collection(db, "gallery"));
+
+await addDoc(
+  collection(db, "gallery"),
+  {
+    imageUrl: result.secure_url,
+    createdAt: Date.now(),
+    order: gallerySnap.size + 1
+  }
+);
     }
 
     document.getElementById("photoStatus").innerText =
